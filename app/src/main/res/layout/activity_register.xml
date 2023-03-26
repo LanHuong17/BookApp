@@ -33,8 +33,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/tvName"
+                    android:drawableStart="@drawable/name_gray"
+                    android:background="@drawable/shape_edittext01"
+                    android:layout_width="match_parent"
+                    android:drawablePadding="10dp"
+                    android:padding="10dp"
+                    android:hint="@string/username"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputlayout_01"
                 android:layout_width="match_parent"
+                android:layout_below="@+id/inputlayout"
                 android:layout_height="wrap_content">
                 <EditText
                     android:id="@+id/tvEmail"
@@ -54,43 +72,58 @@
                 android:layout_width="match_parent"
                 android:layout_below="@+id/inputlayout_01"
                 app:passwordToggleEnabled="true"
+                app:hintEnabled="false"
                 android:layout_height="wrap_content">
                 <EditText
                     android:id="@+id/tvPass"
                     android:drawablePadding="10dp"
                     android:padding="10dp"
-                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:hint="@string/password"
+                    android:background="@drawable/shape_edittext01"
+                    android:drawableStart="@drawable/password_gray"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputlayout_03"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/inputlayout_02"
+                app:passwordToggleEnabled="true"
+                app:hintEnabled="false"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/tvPassConfirm"
+                    android:drawablePadding="10dp"
+                    android:inputType="textPassword"
+                    android:padding="10dp"
+                    android:hint="@string/confirm_password"
                     android:background="@drawable/shape_edittext01"
                     android:drawableStart="@drawable/password_gray"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
+
             </com.google.android.material.textfield.TextInputLayout>
-            <TextView
-                android:id="@+id/tvForgot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/inputlayout_02"
-                android:layout_marginStart="220dp"
-                android:layout_marginTop="10dp"
-                android:text="Forgot password?"/>
+<!--            <TextView-->
+<!--                android:id="@+id/tvForgot"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@id/inputlayout_03"-->
+<!--                android:layout_marginStart="220dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:text="Forgot password?"/>-->
             <Button
                 android:id="@+id/loginBtn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_below="@id/tvForgot"
-                android:text="LOGIN"
-                android:layout_marginTop="10dp"
+                android:layout_below="@id/inputlayout_03"
+                android:text="REGISTER"
+                android:layout_marginTop="30dp"
                 android:backgroundTint="@color/black"
-                />
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@id/loginBtn"
-                android:text="Register"
-                android:layout_marginTop="20dp"
-                android:textColor="@color/black"
-                android:background="@drawable/shape_button02"
                 />
         </RelativeLayout>
     </ScrollView>
