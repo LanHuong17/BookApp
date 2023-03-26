@@ -3,4 +3,5 @@
     <string name="book_app">Book App</string>
     <string name="login">Login</string>
     <string name="continue_without_login">Continue without login</string>
+    <string name="email">Email</string>
 </resources>
