@@ -13,6 +13,15 @@
         android:layout_height="250dp"
         android:background="@drawable/shape_toolbar1">
 
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_gray"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:background="@android:color/transparent"/>
+
         <ImageView
             android:id="@+id/logo"
             android:autofillHints="emailAddress"
@@ -117,7 +126,7 @@
 <!--                android:layout_marginTop="10dp"-->
 <!--                android:text="Forgot password?"/>-->
             <Button
-                android:id="@+id/loginBtn"
+                android:id="@+id/registerBtn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_below="@id/inputlayout_03"
