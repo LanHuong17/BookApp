@@ -31,11 +31,15 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.MaterialComponents">
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputlayout_01"
+                android:theme="@style/TextLabel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
                 <EditText
                     android:id="@+id/tvEmail"
                     android:drawableStart="@drawable/email_gray"
@@ -43,6 +47,7 @@
                     android:layout_width="match_parent"
                     android:drawablePadding="10dp"
                     android:padding="10dp"
+                    android:textColor="@color/black"
                     android:hint="@string/email"
                     android:layout_marginBottom="10dp"
                     android:layout_height="wrap_content"/>
@@ -52,6 +57,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputlayout_02"
                 android:layout_width="match_parent"
+                android:theme="@style/TextLabel"
                 android:layout_below="@+id/inputlayout_01"
                 app:passwordToggleEnabled="true"
                 android:layout_height="wrap_content">
@@ -60,6 +66,7 @@
                     android:drawablePadding="10dp"
                     android:padding="10dp"
                     android:hint="Password"
+                    android:textColor="@color/black"
                     android:background="@drawable/shape_edittext01"
                     android:drawableStart="@drawable/password_gray"
                     android:layout_width="match_parent"
@@ -84,6 +91,7 @@
                 android:backgroundTint="@color/black"
                 />
             <Button
+                android:id="@+id/noAccBtn"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_below="@id/loginBtn"

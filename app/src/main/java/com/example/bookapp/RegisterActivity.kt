@@ -40,7 +40,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.registerBtn.setOnClickListener {
-
+            validateData()
         }
 
     }
@@ -85,7 +85,7 @@ class RegisterActivity : AppCompatActivity() {
             .addOnFailureListener {
                 e->
                 progressDialog.dismiss()
-                Toast.makeText(this, "Failed creating account due to ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
 
             }
     }
