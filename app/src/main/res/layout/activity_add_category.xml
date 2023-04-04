@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddCategoryActivity">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@drawable/shape_toolbar1">
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_gray"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:background="@android:color/transparent"/>
+
+        <ImageView
+            android:id="@+id/logo"
+            android:autofillHints="emailAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/book_logo"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:theme="@style/Theme.MaterialComponents"
+        android:layout_height="200dp">
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/tvCate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Category"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            android:layout_centerHorizontal="true"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_below="@+id/tvCate"
+            android:id="@+id/inputlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/inputCate"
+                android:drawableStart="@drawable/name_gray"
+                android:drawableBottom="@color/black"
+                android:background="@drawable/shape_edittext01"
+                android:layout_width="match_parent"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:hint="Category name"
+                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:layout_below="@+id/inputlayout"
+            android:id="@+id/addCateBtn"
+            android:text="ADD CATEGORY"
+            android:background="@drawable/shape_button01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+</RelativeLayout>
