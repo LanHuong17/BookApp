@@ -40,7 +40,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:theme="@style/Theme.MaterialComponents"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
             android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputlayout"
@@ -136,6 +136,7 @@
                 android:layout_height="60dp"
                 android:layout_below="@id/inputlayout_03"
                 android:text="REGISTER"
+                android:textColor="@color/white"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/black"
                 />
