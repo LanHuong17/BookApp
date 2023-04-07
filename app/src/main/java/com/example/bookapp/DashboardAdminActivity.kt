@@ -1,14 +1,26 @@
 package com.example.bookapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bookapp.Adapter.AdapterCategory
+import com.example.bookapp.Model.ModelCategory
 import com.example.bookapp.databinding.ActivityDashboardAdminBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class DashboardAdminActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDashboardAdminBinding
     private lateinit var firebaseAuth: FirebaseAuth
+
+    private lateinit var categoryArrayList: ArrayList<ModelCategory>
+    private lateinit var adapterCategory:AdapterCategory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,7 +28,9 @@ class DashboardAdminActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         firebaseAuth = FirebaseAuth.getInstance()
+
         checkUser()
+        displayCategory()
 
         //handle logout
         binding.logoutBtn.setOnClickListener {
@@ -28,6 +42,61 @@ class DashboardAdminActivity : AppCompatActivity() {
         binding.addCate.setOnClickListener {
             startActivity(Intent(this, AddCategoryActivity::class.java))
         }
+
+        binding.tvSearch.addTextChangedListener(object : TextWatcher{
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                try {
+                    adapterCategory.filter.filter(s)
+                } catch (e: Exception) {
+
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
+    }
+
+    private fun displayCategory() {
+        categoryArrayList = ArrayList()
+
+        val ref = FirebaseDatabase.getInstance().getReference("Categories")
+        ref.addValueEventListener(object: ValueEventListener{
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                //clear list
+                categoryArrayList.clear()
+                //get data
+                for (ds in snapshot.children) {
+                    val model = ds.getValue(ModelCategory::class.java)
+                    //add to list
+                    categoryArrayList.add(model!!)
+                }
+
+                val layoutManager = LinearLayoutManager(this@DashboardAdminActivity)
+                binding.listCategories.layoutManager = layoutManager
+
+                if (categoryArrayList.isNotEmpty()) {
+                    adapterCategory = AdapterCategory(this@DashboardAdminActivity, categoryArrayList)
+                    binding.listCategories.adapter = adapterCategory
+                } else {
+
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
     }
 
     private fun checkUser() {

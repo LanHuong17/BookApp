@@ -32,7 +32,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/Theme.MaterialComponents">
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputlayout_01"
@@ -87,6 +87,7 @@
                 android:layout_height="60dp"
                 android:layout_below="@id/tvForgot"
                 android:text="LOGIN"
+                android:textColor="@color/white"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/black"
                 />
