@@ -1,4 +1,4 @@
-package com.example.bookapp
+package com.example.bookapp.AdminActivity
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookapp.Adapter.AdapterCategory
+import com.example.bookapp.MainActivity
 import com.example.bookapp.Model.ModelCategory
 import com.example.bookapp.databinding.ActivityDashboardAdminBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -42,6 +43,11 @@ class DashboardAdminActivity : AppCompatActivity() {
         binding.addCate.setOnClickListener {
             startActivity(Intent(this, AddCategoryActivity::class.java))
         }
+
+        binding.addPdf.setOnClickListener {
+            startActivity(Intent(this, AddBookActivity::class.java))
+        }
+
 
         binding.tvSearch.addTextChangedListener(object : TextWatcher{
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back01"
+    android:background="@color/black"
     tools:context=".MainActivity">
 
     <ImageView
@@ -12,27 +12,27 @@
         android:layout_width="336dp"
         android:layout_height="314dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        app:srcCompat="@drawable/logo" />
+        android:layout_marginTop="80dp"
+        app:srcCompat="@drawable/book_logo" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
-        android:text="@string/book_app"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/imageView"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginTop="32dp"-->
+<!--        android:text="@string/book_app"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="20sp" />-->
 
     <Button
         android:id="@+id/loginBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/imageView"
         android:layout_marginTop="105dp"
-        android:background="@drawable/shape_button01"
+        android:background="@drawable/shape_edittext01"
         android:text="@string/login" />
 
     <Button

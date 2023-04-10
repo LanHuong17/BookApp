@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back01"
-    tools:context=".DashboardUserActivity">
+    tools:context=".AdminActivity.BookListAdminActivity">
 
     <RelativeLayout
         android:id="@+id/toolbar1"
@@ -13,37 +13,36 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize">
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/tvBook"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:text="Dashboard Admin"
+            android:text="Books"
             android:layout_marginTop="5dp"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:layout_height="wrap_content"/>
         <TextView
-            android:id="@+id/tvSubTitle"
+            android:id="@+id/tvCategory"
             android:textColor="@color/white"
-            android:layout_below="@+id/tvTitle"
-            android:text="lanhuong@gmail.com"
+            android:layout_below="@+id/tvBook"
+            android:text="Category"
             android:layout_marginTop="5dp"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:layout_height="wrap_content"/>
         <ImageButton
-            android:id="@+id/logoutBtn"
-            android:src="@drawable/logout_gray"
+            android:id="@+id/backBtn"
+            android:src="@drawable/back_gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             android:background="@android:color/transparent"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_centerVertical="true"/>
 
     </RelativeLayout>
-
     <com.google.android.material.textfield.TextInputLayout
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         android:id="@+id/inputlayout"
@@ -66,42 +65,18 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_categories"
-        tools:listitem="@layout/list_categories"
+        android:id="@+id/list_books"
+        tools:listitem="@layout/list_books"
         android:layout_below="@+id/inputlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </androidx.recyclerview.widget.RecyclerView>
-
-    <LinearLayout
+    <Button
+        android:id="@+id/testButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp">
-
-        <Button
-            android:id="@+id/addCate"
-            android:layout_width="330dp"
-            android:layout_height="60dp"
-            android:text="Add Category"
-            android:minHeight="50dp"
-            android:layout_marginEnd="5dp"
-            android:backgroundTint="@color/black" />
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/addPdf"
-            android:theme="@style/Theme.MaterialComponents.DayNight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5sp"
-            android:backgroundTint="@color/teal_700"
-            android:src="@drawable/pdf_white"
-            app:fabCustomSize="50dp" />
-    </LinearLayout>
+        android:text="test"/>
 
 </RelativeLayout>

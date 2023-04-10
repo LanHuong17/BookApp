@@ -5,21 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@drawable/back01"
+    android:background="@color/black"
     android:orientation="vertical"
     tools:context=".SplashActivity">
 
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@drawable/logo" />
-    <TextView
-        android:layout_margin="16dp"
-        android:textColor="@color/black"
-        android:fontFamily="sans-serif-black"
-        android:textSize="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Book App"/>
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:src="@drawable/book_logo" />
+
 
 </LinearLayout>

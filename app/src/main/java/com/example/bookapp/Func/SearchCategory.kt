@@ -27,6 +27,9 @@ class SearchCategory: Filter {
             }
             result.count = filterModel.size
             result.values = filterModel
+        } else {
+            result.count = searchList.size
+            result.values = searchList
         }
         return result
     }
@@ -35,4 +38,14 @@ class SearchCategory: Filter {
         adapterCategory.categoryArrayList = results.values as ArrayList<ModelCategory>
         adapterCategory.notifyDataSetChanged()
     }
+
+
+
+
+//    override fun publishResults(constraint: CharSequence?, results: FilterResults) {
+//
+//        val filteredList = results.values as? ArrayList<ModelCategory>
+//        adapterCategory.categoryArrayList = filteredList ?: categoryArrayList
+//        adapterCategory.notifyDataSetChanged()
+//    }
 }

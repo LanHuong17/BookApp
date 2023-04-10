@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    buildToolsVersion '23.0.1'
     namespace 'com.example.bookapp'
     compileSdk 33
 
@@ -40,6 +41,7 @@ android {
 
 dependencies {
 
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.firebase:firebase-analytics-ktx:21.2.1'
@@ -52,6 +54,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics-ktx:18.3.5'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation 'com.google.firebase:firebase-storage-ktx:20.1.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
