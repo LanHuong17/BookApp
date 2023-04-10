@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminActivity.AddCategoryActivity">
+    tools:context=".AdminActivity.AddBookActivity">
 
     <RelativeLayout
         android:id="@+id/toolbar"
@@ -20,6 +20,15 @@
             android:layout_margin="10dp"
             android:padding="10dp"
             android:background="@android:color/transparent"/>
+        <ImageButton
+            android:id="@+id/addPdfBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pdf_gray"
+            android:layout_margin="10dp"
+            android:layout_alignParentEnd="true"
+            android:padding="10dp"
+            android:background="@android:color/transparent"/>
 
         <ImageView
             android:id="@+id/logo"
@@ -33,15 +42,17 @@
     <RelativeLayout
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
-        android:layout_height="200dp">
+        android:layout_height="400dp">
 
         <TextView
             android:layout_marginTop="10dp"
             android:id="@+id/tvCate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Category"
+            android:text="Add Book"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="30dp"
@@ -52,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
-                android:id="@+id/inputCate"
+                android:id="@+id/inputTitle"
                 android:drawableStart="@drawable/name_gray"
                 android:drawableBottom="@color/black"
                 android:background="@drawable/shape_edittext01"
@@ -60,18 +71,51 @@
                 android:drawablePadding="10dp"
                 android:padding="10dp"
                 android:textColor="@color/black"
-                android:hint="Category name"
+                android:hint="Book title"
                 android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content"/>
 
         </com.google.android.material.textfield.TextInputLayout>
-        <Button
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_below="@+id/inputlayout"
-            android:id="@+id/addCateBtn"
-            android:text="ADD CATEGORY"
-            android:background="@drawable/shape_button01"
+            android:id="@+id/inputlayout_02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/inputDescript"
+                android:drawableStart="@drawable/name_gray"
+                android:drawableBottom="@color/black"
+                android:background="@drawable/shape_edittext01"
+                android:layout_width="match_parent"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:hint="Description"
+                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/pickCate"
+            android:layout_below="@+id/inputlayout_02"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/category_gray"
+            android:drawableEnd="@drawable/expand_gray"
+            android:padding="10dp"
+            android:hint="Category"
+            android:layout_marginBottom="10dp"
+            android:textSize="16dp"
+            android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/addBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pickCate"
+            android:background="@color/white"
+            android:text="ADD BOOK" />
     </RelativeLayout>
 
 </RelativeLayout>
