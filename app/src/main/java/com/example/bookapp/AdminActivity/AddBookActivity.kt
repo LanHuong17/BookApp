@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.delay
 
 class AddBookActivity : AppCompatActivity() {
 
@@ -89,6 +90,7 @@ class AddBookActivity : AppCompatActivity() {
             uploadPdfToStorage()
         }
     }
+
 
     private fun uploadPdfToStorage() {
         Log.d(TAG, "uploadPdfToStorage: uploading to storage")

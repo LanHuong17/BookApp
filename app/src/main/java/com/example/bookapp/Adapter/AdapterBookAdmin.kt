@@ -1,6 +1,7 @@
 package com.example.bookapp.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,8 +9,11 @@ import com.example.bookapp.databinding.ListBooksBinding
 import com.github.barteksc.pdfviewer.PDFView
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import com.example.bookapp.AdminActivity.EditBookActivity
 import com.example.bookapp.Func.MyApplication
 import com.example.bookapp.Func.SearchBook
+import com.example.bookapp.Model.ModelBook
 
 class AdapterBookAdmin :RecyclerView.Adapter<AdapterBookAdmin.ModelBook>, Filterable{
     private val context: Context
@@ -63,6 +67,31 @@ class AdapterBookAdmin :RecyclerView.Adapter<AdapterBookAdmin.ModelBook>, Filter
 
         MyApplication.loadCategory(categoryId = categoryId, holder.tvCategory)
         MyApplication.loadPdfFromUrlSinglePage(url, title, holder.pdfView, holder.progressBar, null)
+
+        holder.moreBtn.setOnClickListener {
+            moreOptionDialog(holder, model)
+        }
+    }
+
+    private fun moreOptionDialog(holder: AdapterBookAdmin.ModelBook, model: com.example.bookapp.Model.ModelBook) {
+        val bookId = model.id
+        val bookUrl = model.url
+        val bookTitle = model.title
+
+        val options = arrayOf("Edit", "Delete")
+
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Choose Option")
+            .setItems(options) {
+                dialog, position ->
+                if (position==0) {
+                    val intent = Intent(context, EditBookActivity::class.java)
+                    intent.putExtra("bookId", bookId)
+                    context.startActivity(intent)
+                } else if (position == 1) {
+                    MyApplication.deleteBook(context, bookId, bookUrl, bookTitle)
+                }
+            }.show()
     }
 
     override fun getItemCount(): Int {
