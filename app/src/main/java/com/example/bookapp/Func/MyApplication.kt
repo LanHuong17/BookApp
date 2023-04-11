@@ -1,10 +1,14 @@
 package com.example.bookapp.Func
 
 import android.app.Application
+import android.app.ProgressDialog
+import android.content.Context
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
+import com.example.bookapp.AdminActivity.EditBookActivity
 import com.github.barteksc.pdfviewer.PDFView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -85,6 +89,48 @@ class MyApplication: Application() {
                     }
 
                 })
+        }
+
+        fun deleteBook(
+            context: Context,
+            bookId: String,
+            bookUrl: String,
+            bookTitle: String) {
+            val TAG = "DELETE_BOOK_TAG"
+            Log.d(TAG, "deleteBook: deleting")
+
+            val progressDialog = ProgressDialog(context)
+            progressDialog.setTitle("Please wait")
+            progressDialog.setMessage("Deleting $bookTitle")
+            progressDialog.setCanceledOnTouchOutside(false)
+            progressDialog.show()
+
+            Log.d(TAG, "deleteBook: deleting from fire storage")
+
+            val storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(bookUrl)
+            storageReference.delete()
+                .addOnSuccessListener {
+                    Log.d(TAG, "deleteBook: deleting from storage")
+
+                    val ref = FirebaseDatabase.getInstance().getReference("Books")
+                    ref.child(bookId)
+                        .removeValue()
+                        .addOnSuccessListener {
+                            progressDialog.dismiss()
+                            Log.d(TAG, "deleteBook: Deleted successfully")
+                            Toast.makeText(context, "Deleted successfully", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener { f->
+                            progressDialog.dismiss()
+                            Log.d(TAG, "deleteBook: Deleted failed: ${f.message}")
+                            Toast.makeText(context, "Deleted failed: ${f.message}", Toast.LENGTH_SHORT).show()
+                        }
+                }
+                .addOnFailureListener {f->
+                    progressDialog.dismiss()
+                    Log.d(TAG, "deleteBook: Deleted failed: ${f.message}")
+                    Toast.makeText(context, "Deleted failed: ${f.message}", Toast.LENGTH_SHORT).show()
+                }
         }
     }
 

@@ -38,9 +38,6 @@ class BookListAdminActivity : AppCompatActivity() {
         categoryId = intent.getStringExtra("categoryId")!!
         category = intent.getStringExtra("category")!!
 
-        binding.testButton.setOnClickListener {
-            Toast.makeText(this, "${bookArrayList.size}", Toast.LENGTH_SHORT).show()
-        }
 
         binding.tvCategory.text = category
 
