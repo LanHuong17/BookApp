@@ -176,7 +176,7 @@ class AddChapterActivity : AppCompatActivity() {
         hashMap["uid"] = "$uid"
         hashMap["titleBook"] = "$selectedBookTitle"
         hashMap["titleChapter"] = "$title"
-        hashMap["url"] = "$pdfUri"
+        hashMap["url"] = "$uploadedPdfUrl"
         hashMap["viewCount"] = 0
         hashMap["downloadCount"] = 0
 
