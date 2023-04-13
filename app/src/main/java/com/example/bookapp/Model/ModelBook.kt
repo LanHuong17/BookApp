@@ -14,7 +14,7 @@ class ModelBook {
         categoryId: String,
         description: String,
         id: String,
-        timestamp: Long,
+        timestamp: String,
         title: String,
         uid: String,
         url: String
@@ -22,7 +22,7 @@ class ModelBook {
         this.categoryId = categoryId
         this.description = description
         this.id = id
-        this.timestamp = timestamp.toString()
+        this.timestamp = timestamp
         this.title = title
         this.uid = uid
         this.url = url

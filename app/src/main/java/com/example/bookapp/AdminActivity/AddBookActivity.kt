@@ -135,7 +135,7 @@ class AddBookActivity : AppCompatActivity() {
         hashMap["description"] = "$description"
         hashMap["categoryId"] = "$selectedCategoryId"
         hashMap["url"] = "$uploadedPdfUrl"
-        hashMap["timestamp"] = "$uid"
+        hashMap["timestamp"] = "$timestamp"
 //        hashMap["viewcount"] = 0
 //        hashMap["downloadsCount"] = 0
 
