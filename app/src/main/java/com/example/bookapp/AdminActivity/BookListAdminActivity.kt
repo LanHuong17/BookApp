@@ -1,5 +1,6 @@
 package com.example.bookapp.AdminActivity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -43,6 +44,10 @@ class BookListAdminActivity : AppCompatActivity() {
 
         binding.backBtn.setOnClickListener {
             onBackPressed()
+        }
+
+        binding.addChapter.setOnClickListener {
+            startActivity(Intent(this, AddChapterActivity::class.java))
         }
 
         binding.tvSearch.addTextChangedListener(object : TextWatcher {

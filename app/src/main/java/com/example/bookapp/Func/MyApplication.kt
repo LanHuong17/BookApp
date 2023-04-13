@@ -8,13 +8,15 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import com.example.bookapp.AdminActivity.EditBookActivity
 import com.github.barteksc.pdfviewer.PDFView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.*
 
 
@@ -24,11 +26,14 @@ class MyApplication: Application() {
     }
 
     companion object {
-        fun formatTimeStamp(timestamp: Long): String {
+        fun formatTimeStamp(timestamp: String): String {
             val cal = Calendar.getInstance(Locale.ENGLISH)
-            cal.timeInMillis = timestamp
+            cal.timeInMillis = timestamp.toLong()
             return android.text.format.DateFormat.format("dd/MM/yyyy", cal).toString()
         }
+
+
+
 
         fun loadPdfFromUrlSinglePage(
             pdfUrl: String,
@@ -82,6 +87,26 @@ class MyApplication: Application() {
                         val category = "${snapshot.child("category").value}"
                         //set category
                         categoryTv.text = category
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+
+                })
+        }
+
+        fun loadBook(bookId: String, bookTv: TextView) {
+            //load category using id from firebase
+            val ref = FirebaseDatabase.getInstance().getReference("Books")
+            ref.child(bookId)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        //get category
+                        val title = "${snapshot.child("title").value}"
+                        //set category
+                        bookTv.text = title
                     }
 
                     override fun onCancelled(error: DatabaseError) {

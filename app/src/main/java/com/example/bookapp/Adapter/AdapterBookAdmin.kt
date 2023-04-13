@@ -11,9 +11,11 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.example.bookapp.AdminActivity.EditBookActivity
+import com.example.bookapp.BookDetailActivity
 import com.example.bookapp.Func.MyApplication
+import com.example.bookapp.Func.MyApplication.Companion.formatTimeStamp
 import com.example.bookapp.Func.SearchBook
-import com.example.bookapp.Model.ModelBook
+import kotlin.collections.ArrayList
 
 class AdapterBookAdmin :RecyclerView.Adapter<AdapterBookAdmin.ModelBook>, Filterable{
     private val context: Context
@@ -58,18 +60,28 @@ class AdapterBookAdmin :RecyclerView.Adapter<AdapterBookAdmin.ModelBook>, Filter
         val categoryId = model.categoryId
         val url = model.url
         val timestamp = model.timestamp
-//        val dateFormat = MyApplication.formatTimeStamp(timestamp)
 
-        //set data
+        val date = formatTimeStamp(timestamp)
+        if (date != null) {
+            holder.tvDate.text = formatTimeStamp(timestamp)
+        } else {
+            holder.tvDate.text = "Invalid timestamp"
+        }
+
         holder.tvTitle.text = title
         holder.tvDescription.text = description
-        holder.tvDate.text = "dd/MM/yyyy"
 
         MyApplication.loadCategory(categoryId = categoryId, holder.tvCategory)
         MyApplication.loadPdfFromUrlSinglePage(url, title, holder.pdfView, holder.progressBar, null)
 
         holder.moreBtn.setOnClickListener {
             moreOptionDialog(holder, model)
+        }
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, BookDetailActivity::class.java)
+            intent.putExtra("bookId", id)
+            context.startActivity(intent)
         }
     }
 
