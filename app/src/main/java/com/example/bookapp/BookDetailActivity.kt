@@ -5,11 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.bookapp.Adapter.AdapterBookAdmin
 import com.example.bookapp.Adapter.AdapterChapterAdmin
-import com.example.bookapp.AdminActivity.BookListAdminActivity
 import com.example.bookapp.Func.MyApplication
-import com.example.bookapp.Model.ModelBook
 import com.example.bookapp.Model.ModelChapter
 import com.example.bookapp.databinding.ActivityBookDetailBinding
 import com.google.firebase.database.DataSnapshot
@@ -42,6 +39,7 @@ class BookDetailActivity : AppCompatActivity() {
         binding.backBtn.setOnClickListener {
             onBackPressed()
         }
+
 
         loadBookDetail()
         loadBookChapter()
@@ -95,6 +93,8 @@ class BookDetailActivity : AppCompatActivity() {
                     val title = "${snapshot.child("title").value}"
                     val uid = "${snapshot.child("uid").value}"
                     val url = "${snapshot.child("url").value}"
+                    val totalViewBook = "${snapshot.child("viewCount").value}"
+
 
                     val date = MyApplication.formatTimeStamp(timestamp)
 
@@ -105,12 +105,54 @@ class BookDetailActivity : AppCompatActivity() {
                     binding.tvTitleBook.text = title
                     binding.tvDescription.text = description
                     binding.tvDate.text = date
+
+                    calculateTotalViewCount(bookId)
+                    calculateTotalDownloadCount(bookId)
+
                 }
 
                 override fun onCancelled(error: DatabaseError) {
 
                 }
 
+            })
+    }
+
+    fun calculateTotalViewCount(bookId: String) {
+        val ref = FirebaseDatabase.getInstance().getReference("Chapters")
+        ref.orderByChild("bookId").equalTo(bookId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var totalViewCount = 0L
+                    for (chapterSnapshot in snapshot.children) {
+                        val viewCount = chapterSnapshot.child("viewCount").value.toString().toLong()
+                        totalViewCount += viewCount
+                    }
+                    binding.tvViewTotal.text = "$totalViewCount"
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Handle error here
+                }
+            })
+    }
+
+    fun calculateTotalDownloadCount(bookId: String) {
+        val ref = FirebaseDatabase.getInstance().getReference("Chapters")
+        ref.orderByChild("bookId").equalTo(bookId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var totalDownloadCount = 0L
+                    for (chapterSnapshot in snapshot.children) {
+                        val downloadCount = chapterSnapshot.child("downloadCount").value.toString().toLong()
+                        totalDownloadCount += downloadCount
+                    }
+                    binding.tvTotalDownload.text = "$totalDownloadCount"
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Handle error here
+                }
             })
     }
 }

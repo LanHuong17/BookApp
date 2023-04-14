@@ -1,5 +1,5 @@
 package com.example.bookapp.Func
 
 object Constants {
-    const val MAX_BYTES_PDF: Long = 1000000
+    const val MAX_BYTES_PDF: Long = 100000000000
 }

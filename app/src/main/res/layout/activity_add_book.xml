@@ -90,6 +90,7 @@
                 android:layout_width="match_parent"
                 android:drawablePadding="10dp"
                 android:padding="10dp"
+                android:maxLines="4"
                 android:textColor="@color/black"
                 android:hint="Description"
                 android:layout_marginBottom="10dp"
