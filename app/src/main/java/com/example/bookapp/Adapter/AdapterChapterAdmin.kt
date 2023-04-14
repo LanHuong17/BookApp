@@ -53,7 +53,7 @@ class AdapterChapterAdmin : RecyclerView.Adapter<AdapterChapterAdmin.ModelChapte
         val dateFormat = MyApplication.formatTimeStamp(timestamp)
 
         holder.tvTitle.text = titleChapter
-        holder.tvCountView.text = "0"
+        holder.tvCountView.text = viewCount.toString()
         holder.tvDate.text = dateFormat
 
         holder.itemView.setOnClickListener {

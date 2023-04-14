@@ -13,11 +13,14 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.*
+import kotlin.collections.HashMap
 
 
 class MyApplication: Application() {
@@ -31,8 +34,6 @@ class MyApplication: Application() {
             cal.timeInMillis = timestamp.toLong()
             return android.text.format.DateFormat.format("dd/MM/yyyy", cal).toString()
         }
-
-
 
 
         fun loadPdfFromUrlSinglePage(
@@ -76,6 +77,7 @@ class MyApplication: Application() {
                     Log.d(TAG, "loadPdfFromUrlSinglePage: ${e.message}")
                 }
         }
+
         fun loadCategory(categoryId: String, categoryTv: TextView) {
             //load category using id from firebase
             val ref = FirebaseDatabase.getInstance().getReference("Categories")
@@ -120,7 +122,8 @@ class MyApplication: Application() {
             context: Context,
             bookId: String,
             bookUrl: String,
-            bookTitle: String) {
+            bookTitle: String
+        ) {
             val TAG = "DELETE_BOOK_TAG"
             Log.d(TAG, "deleteBook: deleting")
 
@@ -143,20 +146,82 @@ class MyApplication: Application() {
                         .addOnSuccessListener {
                             progressDialog.dismiss()
                             Log.d(TAG, "deleteBook: Deleted successfully")
-                            Toast.makeText(context, "Deleted successfully", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Deleted successfully", Toast.LENGTH_SHORT)
+                                .show()
                         }
-                        .addOnFailureListener { f->
+                        .addOnFailureListener { f ->
                             progressDialog.dismiss()
                             Log.d(TAG, "deleteBook: Deleted failed: ${f.message}")
-                            Toast.makeText(context, "Deleted failed: ${f.message}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                "Deleted failed: ${f.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                 }
-                .addOnFailureListener {f->
+                .addOnFailureListener { f ->
                     progressDialog.dismiss()
                     Log.d(TAG, "deleteBook: Deleted failed: ${f.message}")
-                    Toast.makeText(context, "Deleted failed: ${f.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Deleted failed: ${f.message}", Toast.LENGTH_SHORT)
+                        .show()
                 }
         }
+
+        fun incrementChapterView(chapterId: String) {
+            val ref = FirebaseDatabase.getInstance().getReference("Chapters")
+            ref.child(chapterId)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        var viewCount = "${snapshot.child("viewCount").value}"
+                        if (viewCount == "" || viewCount == "null") {
+                            viewCount = "0"
+                        }
+
+                        val newViewCount = viewCount.toLong() + 1
+
+                        val hashMap = HashMap<String, Any>()
+                        hashMap["viewCount"] = newViewCount
+
+                        val refView = FirebaseDatabase.getInstance().getReference("Chapters")
+                        refView.child(chapterId)
+                            .updateChildren(hashMap)
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+
+                })
+        }
+
+        fun incrementDownloadCount(chapterId: String) {
+            val ref = FirebaseDatabase.getInstance().getReference("Chapters")
+            ref.child(chapterId)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        var downloadCount = "${snapshot.child("downloadCount").value}"
+                        if (downloadCount == "" || downloadCount == "null") {
+                            downloadCount = "0"
+                        }
+
+                        val newDownloadCount = downloadCount.toLong() + 1
+
+                        val hashMap = HashMap<String, Any>()
+                        hashMap["downloadCount"] = newDownloadCount
+
+                        val refView = FirebaseDatabase.getInstance().getReference("Chapters")
+                        refView.child(chapterId)
+                            .updateChildren(hashMap)
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+
+                })
+        }
+
+
     }
 
 }

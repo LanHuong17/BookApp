@@ -25,7 +25,7 @@
             android:id="@+id/tvSubTitle"
             android:textColor="@color/white"
             android:layout_below="@+id/tvTitleChapter"
-            android:text="lanhuong@gmail.com"
+            android:text="NA/NA"
             android:layout_marginTop="5dp"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
@@ -62,6 +62,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/downloadBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5sp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/download_black"
+        android:backgroundTint="@color/white"
+        app:fabCustomSize="50dp" />
 
 
 </RelativeLayout>
