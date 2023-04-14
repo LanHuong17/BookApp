@@ -48,7 +48,7 @@ class MyApplication: Application() {
             val ref = FirebaseStorage.getInstance().getReferenceFromUrl(pdfUrl)
             ref.getBytes(Constants.MAX_BYTES_PDF)
                 .addOnSuccessListener { bytes ->
-                    Log.d(TAG, "")
+                    Log.d(TAG, "loadPdfFromUrlSinglePage: PDF_URL: $pdfUrl")
                     Log.d(TAG, "")
 
                     pdfView.fromBytes(bytes)
