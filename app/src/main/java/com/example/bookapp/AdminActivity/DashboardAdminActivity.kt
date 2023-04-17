@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookapp.Adapter.AdapterCategory
 import com.example.bookapp.MainActivity
 import com.example.bookapp.Model.ModelCategory
+import com.example.bookapp.ProfileActivity
 import com.example.bookapp.databinding.ActivityDashboardAdminBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -48,6 +49,9 @@ class DashboardAdminActivity : AppCompatActivity() {
             startActivity(Intent(this, AddBookActivity::class.java))
         }
 
+        binding.profileBtn.setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
 
         binding.tvSearch.addTextChangedListener(object : TextWatcher{
 

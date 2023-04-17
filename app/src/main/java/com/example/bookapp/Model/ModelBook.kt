@@ -8,6 +8,7 @@ class ModelBook {
     var title:String = ""
     var uid:String = ""
     var url:String = ""
+    var isFavorite = false
 
     constructor()
     constructor(
@@ -17,7 +18,8 @@ class ModelBook {
         timestamp: String,
         title: String,
         uid: String,
-        url: String
+        url: String,
+        isFavorite: Boolean
     ) {
         this.categoryId = categoryId
         this.description = description
@@ -26,6 +28,7 @@ class ModelBook {
         this.title = title
         this.uid = uid
         this.url = url
+        this.isFavorite = isFavorite
     }
 
 

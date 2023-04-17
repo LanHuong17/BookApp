@@ -33,7 +33,8 @@ class DashboardUserActivity : AppCompatActivity() {
             binding.tvSubTitle.text = "Not logged in"
         } else {
             val email = firebaseUser.email
-            binding.tvSubTitle.text = email
+            val name = firebaseUser.displayName
+            binding.tvSubTitle.text = name
         }
     }
 }
