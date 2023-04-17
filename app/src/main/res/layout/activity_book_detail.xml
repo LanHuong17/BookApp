@@ -12,14 +12,18 @@
         android:background="@drawable/shape_toolbar2"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize">
+
         <ImageButton
             android:id="@+id/backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/back_gray"
-            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/transparent"
             android:padding="10dp"
-            android:background="@android:color/transparent"/>
+            android:src="@drawable/back_gray" />
         <TextView
             android:id="@+id/tvTitle"
             android:textColor="@color/white"
@@ -204,7 +208,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -250,11 +253,26 @@
 
                 </androidx.recyclerview.widget.RecyclerView>
 
+
             </LinearLayout>
 
         </RelativeLayout>
 
     </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addFavorite"
+        android:theme="@style/Theme.MaterialComponents.DayNight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5sp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/teal_700"
+        android:src="@drawable/heart"
+        app:fabCustomSize="50dp" />
 
 
 

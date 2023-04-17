@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_dynamic_tertiary95"
+    tools:context=".ProfileActivity">
+
+    <RelativeLayout
+        android:id="@+id/toolbar1"
+        android:background="@drawable/shape_toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            android:src="@drawable/back_gray" />
+        <TextView
+            android:id="@+id/tvTitle"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="Profile"
+            android:layout_marginTop="5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="18sp"
+            android:layout_height="wrap_content"/>
+        <ImageButton
+            android:id="@+id/editProfile"
+            android:src="@drawable/edit_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/cover"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@drawable/cover1"
+        android:layout_below="@+id/toolbar1"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/avatar"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="130dp"
+        android:scaleType="centerCrop"
+        android:background="@color/white"
+        android:src="@drawable/person_gray"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_below="@id/avatar"
+        android:layout_centerHorizontal="true"
+        android:text="Username"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_below="@id/tvName"
+        android:layout_centerHorizontal="true"
+        android:text="abc@gmail.com"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TableLayout
+        android:id="@+id/tbl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/tvEmail">
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/tvAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Account"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginStart="30dp"
+                android:textColor="@color/black"
+                android:layout_marginEnd="40dp" />
+
+            <TextView
+                android:id="@+id/tvMember"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Member Date"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginEnd="40dp" />
+            <TextView
+                android:id="@+id/tvFavorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Favorite Book"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginEnd="40dp" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/tvSubAcc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NA"
+                android:textSize="14sp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="10dp" />
+
+            <TextView
+                android:id="@+id/tvSubMem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="N/A"
+                android:layout_marginEnd="10dp" />
+
+            <TextView
+                android:id="@+id/tvSubFav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="N/A"
+                android:layout_marginEnd="10dp" />
+
+        </TableRow>
+
+
+
+    </TableLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_fav"
+        tools:listitem="@layout/list_favorite"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/tbl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+</RelativeLayout>
