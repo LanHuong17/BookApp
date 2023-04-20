@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="5dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="0dp"
+    app:contentPadding="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/userAvatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/person_gray"
+            app:shapeAppearanceOverlay="@style/styleImage"
+            android:layout_marginEnd="10dp"
+            app:strokeColor="@color/gray"
+            app:strokeWidth="1dp"/>
+
+        <TextView
+            android:id="@+id/usernameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/userAvatar"
+            android:text="Username"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/commentDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/usernameTv"
+            android:text="dd/mm/yyyy"
+            android:textStyle="italic"
+            android:textColor="@color/cardview_shadow_start_color"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/commentTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/usernameTv"
+            android:layout_toEndOf="@id/userAvatar"
+            android:text="This is your user comment"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/gray"
+            android:textSize="14sp"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
