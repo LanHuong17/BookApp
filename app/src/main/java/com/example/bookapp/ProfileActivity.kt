@@ -111,6 +111,7 @@ class ProfileActivity : AppCompatActivity() {
                         Glide.with(this@ProfileActivity)
                             .load(profileImage)
                             .placeholder(R.drawable.person_gray)
+                            .override(120, 120)
                             .into(binding.avatar)
                     } catch (e: Exception) {
                         //...
