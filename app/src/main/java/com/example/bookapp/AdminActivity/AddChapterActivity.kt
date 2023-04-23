@@ -1,8 +1,14 @@
 package com.example.bookapp.AdminActivity
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,9 +17,10 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import com.example.bookapp.Adapter.AdapterBookAdmin
+import androidx.core.app.NotificationCompat
+import com.example.bookapp.Func.MyApplication.Companion.sendNotification
 import com.example.bookapp.Model.ModelBook
-import com.example.bookapp.Model.ModelCategory
+import com.example.bookapp.NotifyActivity
 import com.example.bookapp.R
 import com.example.bookapp.databinding.ActivityAddChapterBinding
 import com.google.android.gms.tasks.Task
@@ -22,7 +29,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.storage.FirebaseStorage
 
 class AddChapterActivity : AppCompatActivity() {
@@ -56,6 +62,7 @@ class AddChapterActivity : AppCompatActivity() {
 
         binding.addChapter.setOnClickListener {
             validateData()
+//            Log.d(TAG, "Book Title: ${selectedBookTitle}, Chapter: ${title}, Date: $date")
         }
 
         binding.addPdfBtn.setOnClickListener {
@@ -66,6 +73,7 @@ class AddChapterActivity : AppCompatActivity() {
             categoryPickDialog()
         }
     }
+
 
     private fun categoryPickDialog() {
         Log.d(TAG, "categoryPickDialog: Showing pdf category pick dialog")
@@ -115,6 +123,11 @@ class AddChapterActivity : AppCompatActivity() {
     private var title = ""
     private var book = ""
 
+    private var selectedBookId = ""
+    private var selectedBookTitle = ""
+
+    private var isFavorite = false
+
     private fun validateData() {
         Log.d(TAG, "validateData: validating data")
 
@@ -152,6 +165,8 @@ class AddChapterActivity : AppCompatActivity() {
                 val uploadedPdfUrl = "${uriTask.result}"
 
                 uploadPdfInfoToDb(uploadedPdfUrl, timestamp)
+                makeNotify(uploadedPdfUrl, timestamp)
+                checkFavorite()
 
             }
             .addOnFailureListener { e ->
@@ -160,8 +175,6 @@ class AddChapterActivity : AppCompatActivity() {
                 Toast.makeText(this, "Failed due to ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
-    private var selectedBookId = ""
-    private var selectedBookTitle = ""
 
     private fun uploadPdfInfoToDb(uploadedPdfUrl: String, timestamp: Long) {
         Log.d(TAG, "uploadPdfInfoToDb: Loading to db")
@@ -221,4 +234,57 @@ class AddChapterActivity : AppCompatActivity() {
 
         })
     }
+
+    private fun makeNotify(uploadedPdfUrl: String, timestamp: Long) {
+        Log.d(TAG, "makeNotify: Loading to db")
+        progressDialog.setMessage("Uploading pdf info")
+
+        val uid = firebaseAuth.uid
+        val hashMap: HashMap<String, Any> = HashMap()
+
+        hashMap["bookId"] = "$selectedBookId"
+        hashMap["id"] = "$timestamp"
+        hashMap["timestamp"] = "$timestamp"
+        hashMap["uid"] = "$uid"
+        hashMap["titleBook"] = "$selectedBookTitle"
+        hashMap["titleChapter"] = "$title"
+        hashMap["url"] = "$uploadedPdfUrl"
+
+        val ref = FirebaseDatabase.getInstance().getReference("Notifies")
+        ref.child("$timestamp")
+            .setValue(hashMap)
+            .addOnSuccessListener {
+                Log.d(TAG, "makeNotify: Uploaded")
+                progressDialog.dismiss()
+                Toast.makeText(this, "Uploaded", Toast.LENGTH_SHORT).show()
+                pdfUri = null
+            }
+            .addOnFailureListener {
+                    e->
+                Log.d(TAG, "makeNotify: Failed due to ${e.message}")
+                progressDialog.dismiss()
+                Toast.makeText(this, "Failed due to ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun checkFavorite() {
+        val ref = FirebaseDatabase.getInstance().getReference("Users")
+        ref.child(firebaseAuth.uid!!).child("Favorites").child(selectedBookId)
+            .addValueEventListener(object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    isFavorite = snapshot.exists()
+                    if (isFavorite) {
+                        sendNotification(this@AddChapterActivity, "BookApp","$selectedBookTitle has new chapter")
+                    } else {
+                        //...
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+            })
+    }
+
 }

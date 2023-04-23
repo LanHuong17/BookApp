@@ -19,6 +19,13 @@
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         tools:targetApi="tiramisu">
         <activity
+            android:name=".NotifyActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".EditProfile"
             android:exported="false">
             <meta-data
