@@ -3,6 +3,7 @@ package com.example.bookapp.UserActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -43,6 +44,8 @@ class HomeFragment : Fragment {
     private var category = ""
     private var uid = ""
 
+    lateinit var viewArrayList: ArrayList<ModelBook>
+    lateinit var downloadArrayList: ArrayList<ModelBook>
     lateinit var pdfArrayList: ArrayList<ModelBook>
     private lateinit var adapterBookUser: AdapterBookUser
     private lateinit var adapterAllBook: AdapterAllBook
@@ -65,8 +68,8 @@ class HomeFragment : Fragment {
         binding = FragmentHomeBinding.inflate(LayoutInflater.from(context), container, false)
 
         loadAllBooks()
-        loadMostViewedBooks("viewsCount")
-        loadMostDowloadedBooks("downloadsCount")
+        loadMostViewedBooks()
+        loadMostDownloadedBooks()
 
 
         if(binding.tvSearch.text.toString().trim().isEmpty()){
@@ -115,31 +118,30 @@ class HomeFragment : Fragment {
         return binding.root
     }
 
-    private fun loadMostDowloadedBooks(orderBy: String) {
-        pdfArrayList = ArrayList()
+    private fun loadMostDownloadedBooks() {
+        downloadArrayList = ArrayList()
         var ref = FirebaseDatabase.getInstance().getReference("Books")
-        ref.orderByChild(orderBy).limitToLast(10)
+        ref.orderByChild("downloadCount").limitToFirst(10)
             .addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    pdfArrayList.clear()
+                    downloadArrayList.clear()
                     for(ds in snapshot.children){
                         //get data
                         val model = ds.getValue(ModelBook::class.java)
                         //add to list
-                        pdfArrayList.add(model!!)
+                        downloadArrayList.add(model!!)
                     }
                     //setup adapter
                     val layoutManager = LinearLayoutManager(context)
                     binding.rcv2.layoutManager = layoutManager
 
-                    if (pdfArrayList.isNotEmpty()) {
-                        adapterBookUser = AdapterBookUser(context!!, pdfArrayList)
+                    if (downloadArrayList.isNotEmpty()) {
+                        adapterBookUser = AdapterBookUser(context!!, downloadArrayList)
                         binding.rcv2.adapter = adapterBookUser
                     } else {
                         //...
                     }
-//                    adapterBookUser = AdapterBookUser(context, pdfArrayList)
-//                    binding.rcv2.adapter = adapterBookUser
+                    downloadArrayList.reverse()
                     binding.rcv2.layoutManager= LinearLayoutManager(
                         context,
                         LinearLayoutManager.HORIZONTAL,
@@ -153,31 +155,32 @@ class HomeFragment : Fragment {
             })
     }
 
-    private fun loadMostViewedBooks(orderBy: String) {
-        pdfArrayList = ArrayList()
+
+    private fun loadMostViewedBooks() {
+        viewArrayList = ArrayList()
+
         var ref = FirebaseDatabase.getInstance().getReference("Books")
-        ref.orderByChild(orderBy).limitToLast(10)
+        ref.orderByChild("viewCount")
             .addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                pdfArrayList.clear()
+                viewArrayList.clear()
                 for(ds in snapshot.children){
                     //get data
                     val model = ds.getValue(ModelBook::class.java)
                     //add to list
-                    pdfArrayList.add(model!!)
+                    viewArrayList.add(model!!)
                 }
                 //setup adapter
                 val layoutManager = LinearLayoutManager(context)
                 binding.rcv1.layoutManager = layoutManager
 
-                if (pdfArrayList.isNotEmpty()) {
-                    adapterBookUser = AdapterBookUser(context!!, pdfArrayList)
+                if (viewArrayList.isNotEmpty()) {
+                    adapterBookUser = AdapterBookUser(context!!, viewArrayList)
                     binding.rcv1.adapter = adapterBookUser
                 } else {
                     //...
                 }
-//                adapterBookUser = AdapterBookUser()
-//                binding.rcv1.adapter = adapterBookUser
+                viewArrayList.reverse()
                 binding.rcv1.layoutManager= LinearLayoutManager(
                     context,
                     LinearLayoutManager.HORIZONTAL,

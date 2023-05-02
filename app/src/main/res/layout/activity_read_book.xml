@@ -40,15 +40,23 @@
             android:layout_marginStart="10dp"
             android:background="@android:color/transparent"
             android:layout_centerVertical="true"/>
-        <ImageButton
-            android:id="@+id/moreBtn"
-            android:src="@drawable/expand_gray"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:background="@android:color/transparent"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"/>
+<!--        <ImageButton-->
+<!--            android:id="@+id/moreBtn"-->
+<!--            android:src="@drawable/expand_gray"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginEnd="10dp"-->
+<!--            android:background="@android:color/transparent"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_alignParentEnd="true"/>-->
+<!--        <Spinner-->
+<!--            android:id="@+id/spChapter"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:background="@drawable/expand_gray"-->
+<!--            android:layout_marginEnd="20dp"-->
+<!--            android:layout_alignParentEnd="true"/>-->
 
     </RelativeLayout>
 

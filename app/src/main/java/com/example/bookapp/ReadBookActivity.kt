@@ -1,24 +1,38 @@
 package com.example.bookapp
 
+import android.R
 import android.app.ProgressDialog
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.Display.Mode
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bookapp.Adapter.AdapterChapterAdmin
 import com.example.bookapp.Func.Constants
 import com.example.bookapp.Func.MyApplication
 import com.example.bookapp.Func.MyApplication.Companion.incrementDownloadCount
+import com.example.bookapp.Model.ModelBook
+import com.example.bookapp.Model.ModelChapter
+import com.example.bookapp.Model.ModelComment
 import com.example.bookapp.databinding.ActivityReadBookBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_read_book.*
 import java.io.FileOutputStream
 import java.security.cert.Extension
 
@@ -26,8 +40,11 @@ class ReadBookActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityReadBookBinding
     private lateinit var progressDialog: ProgressDialog
+    private lateinit var chapterArrayList: ArrayList<ModelChapter>
+    private lateinit var spChapter: Spinner
 
     var chapterId = ""
+    var bookId = ""
 
     var chapterTitle = ""
     var chapterUrl = ""
@@ -47,6 +64,7 @@ class ReadBookActivity : AppCompatActivity() {
         progressDialog.setCanceledOnTouchOutside(false)
 
         chapterId = intent.getStringExtra("chapterId")!!
+        bookId = intent.getStringExtra("bookId")!!
 
         binding.backBtn.setOnClickListener {
             onBackPressed()
@@ -68,6 +86,7 @@ class ReadBookActivity : AppCompatActivity() {
         MyApplication.incrementChapterView(chapterId)
 
         loadChapterDetail()
+        loadChapterList()
     }
 
     private var requestStoragePermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -124,7 +143,6 @@ class ReadBookActivity : AppCompatActivity() {
         }
     }
 
-
     private fun loadChapterDetail() {
         val ref = FirebaseDatabase.getInstance().getReference("Chapters")
         ref.child(chapterId)
@@ -149,6 +167,8 @@ class ReadBookActivity : AppCompatActivity() {
             })
     }
 
+    private var currentPage: Int = 0
+
     private fun loadChapterPdf(chapterUrl: String) {
         Log.d(TAG, "loadChapterPdf: get pdf from fb")
 
@@ -160,7 +180,9 @@ class ReadBookActivity : AppCompatActivity() {
                 binding.pdfView.fromBytes(bytes)
                     .swipeHorizontal(false)
                     .onPageChange { page, pageCount ->
-                        val currentPage = page + 1
+                        currentPage = page + 1
+
+
                         binding.tvSubTitle.text = "$currentPage/$pageCount"
                         Log.d(TAG, "onDataChange: $currentPage/$pageCount")
                     }
@@ -171,11 +193,56 @@ class ReadBookActivity : AppCompatActivity() {
                         Log.d(TAG, "loadChapterPdf: ${t.message}")
                     }
                     .load()
+
                 binding.progressBar.visibility = View.GONE
+
             }
             .addOnFailureListener { f ->
                 Log.d(TAG, "loadChapterPdf: ${f.message}")
                 binding.progressBar.visibility = View.GONE
             }
     }
+
+    var selectedChapterId = ""
+    var selectedChapterTitle = ""
+    val chapterTitles = ArrayList<String>()
+    val chapterIds = ArrayList<String>()
+
+    private fun loadChapterList() {
+        chapterArrayList = ArrayList()
+        val ref = FirebaseDatabase.getInstance().getReference("Chapters")
+        ref.orderByChild("bookId").equalTo(bookId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    //clear list
+                    chapterArrayList.clear()
+                    //get data
+                    for (ds in snapshot.children) {
+                        val model = ds.getValue(ModelChapter::class.java)
+                        //add to list
+                        if (model != null) {
+                            chapterArrayList.add(model)
+                        }
+                    }
+                    // create a new list with titleChapter and chapterId
+                    for (chapter in chapterArrayList) {
+                        chapterTitles.add(chapter.titleChapter)
+                        chapterIds.add(chapter.id)
+                    }
+
+                    // set up ArrayAdapter for the Spinner
+                    val adapter = ArrayAdapter(this@ReadBookActivity, android.R.layout.simple_spinner_item, chapterTitles)
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//                    spChapter = binding.spChapter
+//                    spChapter.adapter = adapter
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
+    }
+
+
+
 }

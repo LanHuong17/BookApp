@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookapp.Adapter.AdapterChapterAdmin
 import com.example.bookapp.Adapter.AdapterComment
+import com.example.bookapp.AdminActivity.EditBookActivity
 import com.example.bookapp.Func.MyApplication
 import com.example.bookapp.Model.ModelChapter
 import com.example.bookapp.Model.ModelComment
@@ -87,6 +89,7 @@ class BookDetailActivity : AppCompatActivity() {
         loadBookDetail()
         loadBookChapter()
         loadComment()
+        updateCount(bookId)
     }
 
     private fun loadComment() {
@@ -106,7 +109,8 @@ class BookDetailActivity : AppCompatActivity() {
                         }
 
                     }
-
+                    val totalComment = "${commentArrayList.size}"
+                    binding.tvCommentCount.text = "(${totalComment})"
 
                     val layoutManager = LinearLayoutManager(this@BookDetailActivity)
                     binding.listComments.layoutManager = layoutManager
@@ -245,6 +249,8 @@ class BookDetailActivity : AppCompatActivity() {
 
                     }
 
+                    val totalChapter = "${chapterArrayList.size}"
+                    binding.chapterCount.text = totalChapter
 
                     val layoutManager = LinearLayoutManager(this@BookDetailActivity)
                     binding.listChapters.layoutManager = layoutManager
@@ -288,6 +294,7 @@ class BookDetailActivity : AppCompatActivity() {
                     binding.tvDescription.text = description
                     binding.tvDate.text = date
 
+
                     calculateTotalViewCount(bookId)
                     calculateTotalDownloadCount(bookId)
 
@@ -299,24 +306,40 @@ class BookDetailActivity : AppCompatActivity() {
 
             })
     }
-
+    var totalViewCount = 0L
     fun calculateTotalViewCount(bookId: String) {
         val ref = FirebaseDatabase.getInstance().getReference("Chapters")
         ref.orderByChild("bookId").equalTo(bookId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    var totalViewCount = 0L
+
                     for (chapterSnapshot in snapshot.children) {
                         val viewCount = chapterSnapshot.child("viewCount").value.toString().toLong()
                         totalViewCount += viewCount
                     }
                     binding.tvViewTotal.text = "$totalViewCount"
+
+                    val hashMap = HashMap<String, Any>()
+                    hashMap["viewCount"] = totalViewCount
+
+                    val refBook = FirebaseDatabase.getInstance().getReference("Books")
+                    refBook.child(bookId)
+                        .updateChildren(hashMap)
+                        .addOnSuccessListener {
+                            progressDialog.dismiss()
+
+                        }
+                        .addOnFailureListener { f->
+                            progressDialog.dismiss()
+                        }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
                     //...
                 }
             })
+        Log.d(TAG, "calculateTotalViewCount: totalViewCount: $totalViewCount")
+
     }
 
     fun calculateTotalDownloadCount(bookId: String) {
@@ -330,11 +353,29 @@ class BookDetailActivity : AppCompatActivity() {
                         totalDownloadCount += downloadCount
                     }
                     binding.tvTotalDownload.text = "$totalDownloadCount"
+
+                    val hashMap = HashMap<String, Any>()
+                    hashMap["downloadCount"] = totalDownloadCount
+
+                    val refBook = FirebaseDatabase.getInstance().getReference("Books")
+                    refBook.child(bookId)
+                        .updateChildren(hashMap)
+                        .addOnSuccessListener {
+                            progressDialog.dismiss()
+
+                        }
+                        .addOnFailureListener { f->
+                            progressDialog.dismiss()
+                        }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
                     //...
                 }
             })
+    }
+
+    fun updateCount(bookId: String) {
+
     }
 }
