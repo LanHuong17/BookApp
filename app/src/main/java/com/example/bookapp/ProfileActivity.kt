@@ -45,10 +45,6 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(Intent(this, EditProfile::class.java))
         }
 
-        binding.notifyBtn.setOnClickListener {
-            startActivity(Intent(this, NotifyActivity::class.java))
-        }
-
         loadProfileInfo()
         loadFavoriteBook()
     }

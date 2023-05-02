@@ -1,19 +1,13 @@
 package com.example.bookapp.Func
 
-import android.app.*
+import android.app.Application
+import android.app.ProgressDialog
 import android.content.Context
-import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.app.NotificationCompat
-import com.example.bookapp.AdminActivity.AddChapterActivity
-import com.example.bookapp.NotifyActivity
-import com.example.bookapp.R
 import com.github.barteksc.pdfviewer.PDFView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -23,7 +17,6 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
@@ -43,12 +36,6 @@ class MyApplication: Application() {
             val cal = Calendar.getInstance(Locale.ENGLISH)
             cal.timeInMillis = timestamp.toLong()
             return android.text.format.DateFormat.format("dd/MM/yyyy", cal).toString()
-        }
-
-        fun formatTimestampToDateTime(timestamp: String): String {
-            val date = Date(timestamp.toLong())
-            val format = SimpleDateFormat("HH:mm, dd/MM/yyyy", Locale.getDefault())
-            return format.format(date)
         }
 
 
@@ -237,53 +224,8 @@ class MyApplication: Application() {
                 })
         }
 
-        fun sendNotification(context: AddChapterActivity, title: String, message: String) {
-            val channelId = "my_channel_id"
-            val channelName = "My Channel"
-            val channelDescription = "My Channel Description"
-            val notificationId = 1
 
-            // Tạo đối tượng NotificationManager
-            val notificationManager =
-                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-            // Kiểm tra phiên bản Android
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                // Tạo Notification Channel nếu phiên bản Android >= Oreo
-                val channel = NotificationChannel(
-                    channelId,
-                    channelName,
-                    NotificationManager.IMPORTANCE_HIGH
-                ).apply {
-                    description = channelDescription
-                    enableLights(true)
-                    lightColor = Color.RED
-                    enableVibration(true)
-                }
-                notificationManager.createNotificationChannel(channel)
-            }
-
-            // Tạo Intent để xử lý sự kiện khi người dùng nhấn vào thông báo
-            val intent = Intent(context, NotifyActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            val pendingIntent = PendingIntent.getActivity(
-                context,
-                0,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE // Thêm cờ FLAG_IMMUTABLE vào đây
-            )
-
-            // Tạo đối tượng NotificationCompat.Builder
-            val builder = NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(R.drawable.book_logo3)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setPriority(NotificationCompat.PRIORITY_HIGH) // Mức độ ưu tiên
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent) // Đặt Intent xử lý sự kiện
-
-            notificationManager.notify(notificationId, builder.build())
-        }
 
     }
 
