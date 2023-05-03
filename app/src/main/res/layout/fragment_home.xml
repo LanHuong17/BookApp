@@ -52,6 +52,7 @@
                 app:sliderIndicatorSelectedColor="#F1B814"
                 app:sliderIndicatorUnselectedColor="#C6C2C2"
                 tools:ignore="MissingConstraints"
+                android:background="@drawable/bs"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">

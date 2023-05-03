@@ -13,14 +13,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import com.example.bookapp.Model.ModelCategory
 import com.example.bookapp.databinding.ActivityAddBookBinding
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.delay
 
@@ -68,7 +66,6 @@ class AddBookActivity : AppCompatActivity() {
             categoryPickDialog()
         }
     }
-
     private var title = ""
     private var description = ""
     private var category = ""

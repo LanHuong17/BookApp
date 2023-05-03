@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentManager
 import com.example.bookapp.UserActivity.CategoryFragment
 import com.example.bookapp.UserActivity.FavoriteFragment
 import com.example.bookapp.UserActivity.HomeFragment
-import com.example.bookapp.UserActivity.ProfiveFragment
+import com.example.bookapp.UserActivity.ProfileFragment
 import com.example.bookapp.databinding.ActivityDashboardAdminBinding
 import com.example.bookapp.databinding.ActivityDashboardUserBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -24,6 +24,7 @@ class DashboardUserActivity : AppCompatActivity() {
         replaceFragment(HomeFragment())
 
         firebaseAuth = FirebaseAuth.getInstance()
+
         checkUser()
 
         binding.bottomNavigation.setOnItemSelectedListener {
@@ -31,7 +32,7 @@ class DashboardUserActivity : AppCompatActivity() {
                 R.id.home -> replaceFragment(HomeFragment())
                 R.id.category -> replaceFragment(CategoryFragment())
                 R.id.favorite -> replaceFragment(FavoriteFragment())
-                R.id.profive -> replaceFragment(ProfiveFragment())
+                R.id.profile -> replaceFragment(ProfileFragment())
                 else -> {}
             }
             true
@@ -52,7 +53,7 @@ class DashboardUserActivity : AppCompatActivity() {
         } else {
             val email = firebaseUser.email
             val name = firebaseUser.displayName
-            binding.tvSubTitle.text = name
+            binding.tvSubTitle.text = email
         }
     }
 

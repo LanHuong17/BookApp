@@ -17,7 +17,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.activity_read_book.*
 
 class BookListAdminActivity : AppCompatActivity() {
 
@@ -42,8 +41,6 @@ class BookListAdminActivity : AppCompatActivity() {
 
 
         binding.tvCategory.text = category
-
-        binding.listBooks.recycledViewPool
 
         binding.backBtn.setOnClickListener {
             onBackPressed()
@@ -97,10 +94,6 @@ class BookListAdminActivity : AppCompatActivity() {
 
                     }
 
-                    val myRunnable = Runnable {
-                        // Code to be executed in the background
-                        Log.d("MyRunnable", "Running in the background...")
-                    }
 
                     val layoutManager = LinearLayoutManager(this@BookListAdminActivity)
                     binding.listBooks.layoutManager = layoutManager

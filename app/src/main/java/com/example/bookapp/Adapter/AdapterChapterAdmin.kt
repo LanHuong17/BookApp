@@ -59,7 +59,6 @@ class AdapterChapterAdmin : RecyclerView.Adapter<AdapterChapterAdmin.ModelChapte
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ReadBookActivity::class.java)
             intent.putExtra("chapterId", id)
-            intent.putExtra("bookId", bookId)
             context.startActivity(intent)
         }
 

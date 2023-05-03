@@ -1,7 +1,6 @@
 package com.example.bookapp.Adapter
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -71,7 +70,6 @@ class AdapterBookAdmin :RecyclerView.Adapter<AdapterBookAdmin.ModelBook>, Filter
 
         holder.tvTitle.text = title
         holder.tvDescription.text = description
-        holder.pdfView.recycle()
 
         MyApplication.loadCategory(categoryId = categoryId, holder.tvCategory)
         MyApplication.loadPdfFromUrlSinglePage(url, title, holder.pdfView, holder.progressBar, null)
@@ -103,20 +101,7 @@ class AdapterBookAdmin :RecyclerView.Adapter<AdapterBookAdmin.ModelBook>, Filter
                     intent.putExtra("bookId", bookId)
                     context.startActivity(intent)
                 } else if (position == 1) {
-                    val alertDialogBuilder = AlertDialog.Builder(context)
-
-                    alertDialogBuilder.setTitle("Delete Book")
-                    alertDialogBuilder.setMessage("Are you sure?")
-                    alertDialogBuilder.setPositiveButton("Delete", DialogInterface.OnClickListener { _, _ ->
-                        MyApplication.deleteBook(context, bookId, bookUrl, bookTitle)
-                    })
-                    alertDialogBuilder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, _ ->
-                        dialog.dismiss()
-                    })
-
-                    val alertDialog = alertDialogBuilder.create()
-                    alertDialog.show()
-
+                    MyApplication.deleteBook(context, bookId, bookUrl, bookTitle)
                 }
             }.show()
     }

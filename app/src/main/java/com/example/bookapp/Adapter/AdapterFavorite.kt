@@ -51,7 +51,7 @@ class AdapterFavorite : RecyclerView.Adapter<AdapterFavorite.ModelFavorite> {
 
     override fun onBindViewHolder(holder: ModelFavorite, position: Int) {
         val model = favArrayList[position]
-        binding.pdfView.recycle()
+
         loadBookDetails(model, holder)
 
         holder.itemView.setOnClickListener {
@@ -73,7 +73,6 @@ class AdapterFavorite : RecyclerView.Adapter<AdapterFavorite.ModelFavorite> {
                         //...
                     }
         }
-
     }
 
     private fun loadBookDetails(model: ModelBook, holder: ModelFavorite) {

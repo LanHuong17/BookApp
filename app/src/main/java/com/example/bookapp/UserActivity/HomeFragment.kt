@@ -3,7 +3,6 @@ package com.example.bookapp.UserActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +43,7 @@ class HomeFragment : Fragment {
     private var category = ""
     private var uid = ""
 
+
     lateinit var viewArrayList: ArrayList<ModelBook>
     lateinit var downloadArrayList: ArrayList<ModelBook>
     lateinit var pdfArrayList: ArrayList<ModelBook>
@@ -72,14 +72,6 @@ class HomeFragment : Fragment {
         loadMostDownloadedBooks()
 
 
-        if(binding.tvSearch.text.toString().trim().isEmpty()){
-            binding.sliderView.visibility= View.VISIBLE
-            binding.textView1.visibility= View.VISIBLE
-            binding.textView2.visibility= View.VISIBLE
-            binding.textView3.visibility= View.VISIBLE
-            binding.rcv1.visibility= View.VISIBLE
-            binding.rcv2.visibility= View.VISIBLE
-        }
         binding.tvSearch.addTextChangedListener(object : TextWatcher {
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -115,13 +107,15 @@ class HomeFragment : Fragment {
 
         })
 
+
+
         return binding.root
     }
 
     private fun loadMostDownloadedBooks() {
         downloadArrayList = ArrayList()
         var ref = FirebaseDatabase.getInstance().getReference("Books")
-        ref.orderByChild("downloadCount").limitToFirst(10)
+        ref.orderByChild("downloadCount").limitToLast(10)
             .addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     downloadArrayList.clear()
@@ -160,45 +154,45 @@ class HomeFragment : Fragment {
         viewArrayList = ArrayList()
 
         var ref = FirebaseDatabase.getInstance().getReference("Books")
-        ref.orderByChild("viewCount")
+        ref.orderByChild("viewCount").limitToLast(10)
             .addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                viewArrayList.clear()
-                for(ds in snapshot.children){
-                    //get data
-                    val model = ds.getValue(ModelBook::class.java)
-                    //add to list
-                    viewArrayList.add(model!!)
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    viewArrayList.clear()
+                    for(ds in snapshot.children){
+                        //get data
+                        val model = ds.getValue(ModelBook::class.java)
+                        //add to list
+                        viewArrayList.add(model!!)
+                    }
+                    //setup adapter
+                    val layoutManager = LinearLayoutManager(context)
+                    binding.rcv1.layoutManager = layoutManager
+
+                    if (viewArrayList.isNotEmpty()) {
+                        adapterBookUser = AdapterBookUser(context!!, viewArrayList)
+                        binding.rcv1.adapter = adapterBookUser
+                    } else {
+                        //...
+                    }
+                    viewArrayList.reverse()
+                    binding.rcv1.layoutManager= LinearLayoutManager(
+                        context,
+                        LinearLayoutManager.HORIZONTAL,
+                        false
+                    )
                 }
-                //setup adapter
-                val layoutManager = LinearLayoutManager(context)
-                binding.rcv1.layoutManager = layoutManager
 
-                if (viewArrayList.isNotEmpty()) {
-                    adapterBookUser = AdapterBookUser(context!!, viewArrayList)
-                    binding.rcv1.adapter = adapterBookUser
-                } else {
-                    //...
+
+                override fun onCancelled(error: DatabaseError) {
                 }
-                viewArrayList.reverse()
-                binding.rcv1.layoutManager= LinearLayoutManager(
-                    context,
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
-            }
-
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
+            })
 
     }
 
     private fun loadAllBooks() {
         pdfArrayList = ArrayList()
         var ref = FirebaseDatabase.getInstance().getReference("Books")
-        ref.limitToLast(20).addValueEventListener(object : ValueEventListener{
+        ref.limitToFirst(20).addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 pdfArrayList.clear()
                 for(ds in snapshot.children){

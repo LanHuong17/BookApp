@@ -70,7 +70,6 @@ class ProfileActivity : AppCompatActivity() {
                     val layoutManager = LinearLayoutManager(this@ProfileActivity)
                     binding.listFav.layoutManager = layoutManager
 
-
                     if (favArrayList.isNotEmpty()) {
                         adapterFavorite = AdapterFavorite(this@ProfileActivity, favArrayList)
                         binding.listFav.adapter = adapterFavorite

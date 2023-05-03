@@ -40,10 +40,6 @@ class LoginActivity : AppCompatActivity() {
         binding.loginBtn.setOnClickListener {
             validateData()
         }
-
-        binding.tvForgot.setOnClickListener {
-            startActivity(Intent(this, ForgotPasswordActivity::class.java))
-        }
     }
 
     private var email = ""
