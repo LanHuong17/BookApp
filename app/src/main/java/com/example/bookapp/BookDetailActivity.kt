@@ -301,16 +301,30 @@ class BookDetailActivity : AppCompatActivity() {
     }
 
     fun calculateTotalViewCount(bookId: String) {
+        var totalViewCount = 0L
         val ref = FirebaseDatabase.getInstance().getReference("Chapters")
         ref.orderByChild("bookId").equalTo(bookId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    var totalViewCount = 0L
                     for (chapterSnapshot in snapshot.children) {
                         val viewCount = chapterSnapshot.child("viewCount").value.toString().toLong()
                         totalViewCount += viewCount
                     }
                     binding.tvViewTotal.text = "$totalViewCount"
+
+                    val hashMap = HashMap<String, Any>()
+                    hashMap["viewCount"] = totalViewCount
+
+                    val refBook = FirebaseDatabase.getInstance().getReference("Books")
+                    refBook.child(bookId)
+                        .updateChildren(hashMap)
+                        .addOnSuccessListener {
+                            progressDialog.dismiss()
+
+                        }
+                        .addOnFailureListener { f->
+                            progressDialog.dismiss()
+                        }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -330,6 +344,19 @@ class BookDetailActivity : AppCompatActivity() {
                         totalDownloadCount += downloadCount
                     }
                     binding.tvTotalDownload.text = "$totalDownloadCount"
+                    val hashMap = HashMap<String, Any>()
+                    hashMap["downloadCount"] = totalDownloadCount
+
+                    val refBook = FirebaseDatabase.getInstance().getReference("Books")
+                    refBook.child(bookId)
+                        .updateChildren(hashMap)
+                        .addOnSuccessListener {
+                            progressDialog.dismiss()
+
+                        }
+                        .addOnFailureListener { f->
+                            progressDialog.dismiss()
+                        }
                 }
 
                 override fun onCancelled(error: DatabaseError) {

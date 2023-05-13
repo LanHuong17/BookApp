@@ -9,11 +9,11 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="336dp"
-        android:layout_height="314dp"
+        android:layout_width="312dp"
+        android:layout_height="270dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
-        app:srcCompat="@drawable/book_logo" />
+        app:srcCompat="@drawable/book_logo3" />
 
 <!--    <TextView-->
 <!--        android:id="@+id/textView"-->
@@ -31,8 +31,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView"
-        android:layout_marginTop="105dp"
-        android:background="@drawable/shape_edittext01"
+        android:layout_marginTop="155dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/shape_button01"
         android:text="@string/login" />
 
     <Button
@@ -43,6 +45,7 @@
         android:layout_marginTop="5dp"
         android:textColor="@color/purple_200"
         android:background="@drawable/shape_button02"
-
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:text="@string/continue_without_login" />
 </RelativeLayout>

@@ -28,6 +28,7 @@ class DashboardUserActivity : AppCompatActivity() {
         checkUser()
 
         binding.bottomNavigation.setOnItemSelectedListener {
+            val firebaseUser = firebaseAuth.currentUser
             when(it.itemId){
                 R.id.home -> replaceFragment(HomeFragment())
                 R.id.category -> replaceFragment(CategoryFragment())

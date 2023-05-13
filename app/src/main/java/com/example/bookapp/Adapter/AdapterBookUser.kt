@@ -2,6 +2,7 @@ package com.example.bookapp.Adapter
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,10 @@ class AdapterBookUser: RecyclerView.Adapter<AdapterBookUser.ModelBook> {
     private lateinit var bookArrayList: ArrayList<com.example.bookapp.Model.ModelBook>
     private lateinit var binding: ListBooksItemBinding
 
+    private companion object {
+        const val TAG = "ADAPTER_BOOK_USER"
+    }
+
     constructor(
         context: Context,
         bookArrayList: ArrayList<com.example.bookapp.Model.ModelBook>,
@@ -31,10 +36,11 @@ class AdapterBookUser: RecyclerView.Adapter<AdapterBookUser.ModelBook> {
     inner class ModelBook(itemView: View): RecyclerView.ViewHolder(itemView) {
         var tvTitle: TextView = binding.titleTv
         var tvCategory: TextView = binding.tvCategory
-        var tvDescription: TextView = binding.tvDescription
-        var tvDate: TextView = binding.tvDate
+//        var tvDescription: TextView = binding.tvDescription
+        var tvTotalView: TextView = binding.totalView
         var pdfView: PDFView = binding.pdfView
         var progressBar: ProgressBar = binding.progressBar
+        var tvTotalDownload: TextView = binding.totalDownload
     }
 
 
@@ -52,16 +58,22 @@ class AdapterBookUser: RecyclerView.Adapter<AdapterBookUser.ModelBook> {
         val categoryId = model.categoryId
         val url = model.url
         val timestamp = model.timestamp
+        val viewTotal = model.viewCount
+        val downloadTotal = model.downloadCount
 
-        val date = formatTimeStamp(timestamp)
-        if (date != null) {
-            holder.tvDate.text = formatTimeStamp(timestamp)
-        } else {
-            holder.tvDate.text = "Invalid timestamp"
-        }
+//        val date = formatTimeStamp(timestamp)
+//        if (date != null) {
+//            holder.tvDate.text = formatTimeStamp(timestamp)
+//        } else {
+//            holder.tvDate.text = "Invalid timestamp"
+//        }
 
         holder.tvTitle.text = title
-        holder.tvDescription.text = description
+//        holder.tvDescription.text = description
+
+        holder.tvTotalView.text = viewTotal.toString()
+        holder.tvTotalDownload.text = downloadTotal.toString()
+
 
         MyApplication.loadCategory(categoryId = categoryId, holder.tvCategory)
         MyApplication.loadPdfFromUrlSinglePage(url, title, holder.pdfView, holder.progressBar, null)

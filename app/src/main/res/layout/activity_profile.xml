@@ -45,6 +45,20 @@
 
     </RelativeLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/notify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cover"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="30dp"
+        android:layout_toStartOf="@id/avatar"
+        android:backgroundTint="@color/teal_700"
+        android:src="@drawable/notify"
+        android:theme="@style/Theme.MaterialComponents.DayNight"
+        app:fabCustomSize="50dp" />
+
     <ImageButton
         android:id="@+id/cover"
         android:layout_width="match_parent"
@@ -161,7 +175,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_fav"
-        tools:listitem="@layout/list_favorite"
+        tools:listitem="@layout/list_books"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/tbl"
         android:layout_width="match_parent"

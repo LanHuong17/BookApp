@@ -47,26 +47,27 @@
 
             <com.smarteist.autoimageslider.SliderView
                 android:id="@+id/sliderView"
-                android:layout_width="match_parent"
-                android:layout_height="255dp"
-                app:sliderIndicatorSelectedColor="#F1B814"
-                app:sliderIndicatorUnselectedColor="#C6C2C2"
-                tools:ignore="MissingConstraints"
+                android:layout_width="405dp"
+                android:layout_height="203dp"
                 android:background="@drawable/bs"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:sliderIndicatorSelectedColor="#F1B814"
+                app:sliderIndicatorUnselectedColor="#C6C2C2"
+                tools:ignore="MissingConstraints">
 
             </com.smarteist.autoimageslider.SliderView>
 
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="Most Viewers"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.02"
                 app:layout_constraintStart_toStartOf="parent"
@@ -85,11 +86,12 @@
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="Top Downloads"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.02"
                 app:layout_constraintStart_toStartOf="parent"
@@ -108,11 +110,12 @@
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="All Book"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.02"
                 app:layout_constraintStart_toStartOf="parent"

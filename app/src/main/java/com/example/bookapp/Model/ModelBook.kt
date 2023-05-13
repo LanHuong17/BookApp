@@ -8,6 +8,8 @@ class ModelBook {
     var title:String = ""
     var uid:String = ""
     var url:String = ""
+    var viewCount:Int = 0
+    var downloadCount:Int = 0
     var isFavorite = false
 
     constructor()
@@ -19,6 +21,8 @@ class ModelBook {
         title: String,
         uid: String,
         url: String,
+        viewCount: Int,
+        downloadCount: Int,
         isFavorite: Boolean
     ) {
         this.categoryId = categoryId
@@ -28,6 +32,8 @@ class ModelBook {
         this.title = title
         this.uid = uid
         this.url = url
+        this.viewCount = viewCount
+        this.downloadCount = downloadCount
         this.isFavorite = isFavorite
     }
 

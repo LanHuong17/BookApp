@@ -15,6 +15,7 @@ import com.example.bookapp.Adapter.AdapterBookAdmin
 import com.example.bookapp.Adapter.AdapterBookUser
 import com.example.bookapp.Model.ModelBook
 import com.example.bookapp.databinding.FragmentHomeBinding
+import com.example.bookapp.databinding.ListBooksItemBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -23,6 +24,8 @@ import com.google.firebase.database.ValueEventListener
 
 class HomeFragment : Fragment {
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var subBinding: ListBooksItemBinding
+    private var isMostViewed: Boolean = true
 
     private companion object {
         const val TAG = "BOOKS_USER_TAG"
@@ -66,6 +69,7 @@ class HomeFragment : Fragment {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(LayoutInflater.from(context), container, false)
+        subBinding = ListBooksItemBinding.inflate(LayoutInflater.from(context), container, false)
 
         loadAllBooks()
         loadMostViewedBooks()
@@ -113,9 +117,10 @@ class HomeFragment : Fragment {
     }
 
     private fun loadMostDownloadedBooks() {
+        subBinding.totalView.visibility = View.INVISIBLE
         downloadArrayList = ArrayList()
         var ref = FirebaseDatabase.getInstance().getReference("Books")
-        ref.orderByChild("downloadCount").limitToLast(10)
+        ref.orderByChild("downloadCount").limitToLast(5)
             .addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     downloadArrayList.clear()
@@ -151,10 +156,11 @@ class HomeFragment : Fragment {
 
 
     private fun loadMostViewedBooks() {
+        subBinding.totalDownload.visibility = View.GONE
         viewArrayList = ArrayList()
 
         var ref = FirebaseDatabase.getInstance().getReference("Books")
-        ref.orderByChild("viewCount").limitToLast(10)
+        ref.orderByChild("viewCount").limitToLast(5)
             .addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     viewArrayList.clear()
@@ -192,7 +198,7 @@ class HomeFragment : Fragment {
     private fun loadAllBooks() {
         pdfArrayList = ArrayList()
         var ref = FirebaseDatabase.getInstance().getReference("Books")
-        ref.limitToFirst(20).addValueEventListener(object : ValueEventListener{
+        ref.limitToFirst(10).addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 pdfArrayList.clear()
                 for(ds in snapshot.children){
