@@ -8,6 +8,7 @@ class ModelNotify {
     var titleChapter:String = ""
     var titleBook:String = ""
     var timestamp:String = ""
+    var isSelected: Boolean = false
 
     constructor()
     constructor(
@@ -17,7 +18,8 @@ class ModelNotify {
         url: String,
         titleChapter: String,
         titleBook: String,
-        timestamp: String
+        timestamp: String,
+        isSelected: Boolean
     ) {
         this.uid = uid
         this.id = id
@@ -26,6 +28,7 @@ class ModelNotify {
         this.titleChapter = titleChapter
         this.titleBook = titleBook
         this.timestamp = timestamp
+        this.isSelected = isSelected
     }
 
 

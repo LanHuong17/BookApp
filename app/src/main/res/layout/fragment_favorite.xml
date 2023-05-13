@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserActivity.FavoriteFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ImageButton
+        android:id="@+id/cover"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:src="@drawable/cover1"
+        android:visibility="gone"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/avatar"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/shape_toolbar3"
+        android:src="@drawable/person_gray"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tvName"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/avatar"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="150dp"
+        android:text="Username"
+        android:textStyle="bold"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_below="@id/tvName"
+        android:layout_centerHorizontal="true"
+        android:text="abc@gmail.com"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <TableLayout
+        android:id="@+id/tbl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/tvEmail"
+        android:visibility="gone">
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/tvAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Account"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginStart="30dp"
+                android:textColor="@color/black"
+                android:layout_marginEnd="40dp" />
+
+            <TextView
+                android:id="@+id/tvMember"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Member Date"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginEnd="40dp" />
+            <TextView
+                android:id="@+id/tvFavorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Favorite Book"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginEnd="40dp" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/tvSubAcc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NA"
+                android:textSize="14sp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="10dp" />
+
+            <TextView
+                android:id="@+id/tvSubMem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="N/A"
+                android:layout_marginEnd="10dp" />
+
+            <TextView
+                android:id="@+id/tvSubFav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="N/A"
+                android:layout_marginEnd="10dp" />
+
+        </TableRow>
+
+
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Favorite Books"
+        android:layout_below="@id/avatar"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_fav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="0dp"
+        tools:listitem="@layout/list_favorite">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>

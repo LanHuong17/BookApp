@@ -1,98 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="120dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="5dp"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="0dp"
-    app:contentPadding="5dp">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="128dp"
+    android:layout_height="218dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:id="@+id/pdfRl"
+        android:layout_width="wrap_content"
+        android:layout_height="170dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
-            android:id="@+id/pdfRl"
-            android:layout_width="80dp"
-            android:layout_height="100dp"
-            android:layout_marginEnd="5dp"
-            android:background="@color/gray">
-
-            <com.github.barteksc.pdfviewer.PDFView
-                android:id="@+id/pdfView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+        <com.github.barteksc.pdfviewer.PDFView
+            android:id="@+id/pdfView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <ProgressBar
                 android:id="@+id/progress_bar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/titleTv"
-            android:layout_toEndOf="@+id/pdfRl"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:text="Book's Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/tvDescription"
-            style="@style/TextAppearance.MaterialComponents.Body2"
-            android:layout_width="244dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/titleTv"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
-            android:layout_toEndOf="@+id/pdfRl"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="Description of books" />
-
-
-        <TextView
-            android:id="@+id/tvCategory"
-            style="@style/TextAppearance.MaterialComponents.Caption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="4dp"
-            android:maxLines="1"
-            android:text="Category" />
-
-        <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="130dp"
-            android:layout_marginBottom="0dp"
-            android:layout_toEndOf="@+id/pdfRl"
-            android:maxLines="1"
-            android:text="dd/MM/yyyy" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/removeFavorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="5sp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="@color/teal_700"
-            android:src="@drawable/full_heart_small"
-            android:theme="@style/Theme.MaterialComponents.DayNight"
-            app:fabCustomSize="50dp" />
-
+                android:layout_height="match_parent" />
+        </com.github.barteksc.pdfviewer.PDFView>
 
     </RelativeLayout>
 
-</androidx.cardview.widget.CardView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/removeFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="@color/teal_700"
+        android:src="@drawable/full_heart_small"
+        android:theme="@style/Theme.MaterialComponents.DayNight"
+        app:fabCustomSize="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/titleTv"
+        style="@style/TextAppearance.MaterialComponents.Body2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Book's Title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pdfRl" />
+
+    <TextView
+        android:id="@+id/tvCategory"
+        style="@style/TextAppearance.MaterialComponents.Body2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Category"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTv" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        style="@style/TextAppearance.MaterialComponents.Body2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="dd/MM/yyyy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCategory"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        style="@style/TextAppearance.MaterialComponents.Body2"
+        android:maxLines="4"
+        android:ellipsize="end"
+        android:text="Description of books"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDate"
+        android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,8 +3,10 @@ package com.example.bookapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.bookapp.Adapter.AdapterBookAdmin
 import com.example.bookapp.Adapter.AdapterCategory
 import com.example.bookapp.Adapter.AdapterFavorite
 import com.example.bookapp.AdminActivity.AddCategoryActivity
@@ -45,7 +47,7 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(Intent(this, EditProfile::class.java))
         }
 
-        binding.notifyBtn.setOnClickListener {
+        binding.notify.setOnClickListener {
             startActivity(Intent(this, NotifyActivity::class.java))
         }
 
@@ -80,6 +82,12 @@ class ProfileActivity : AppCompatActivity() {
                     } else {
 
                     }
+                    binding.listFav.layoutManager= GridLayoutManager(
+                        this@ProfileActivity,
+                        3,
+                        LinearLayoutManager.VERTICAL,
+                        false
+                    )
                 }
 
                 override fun onCancelled(error: DatabaseError) {

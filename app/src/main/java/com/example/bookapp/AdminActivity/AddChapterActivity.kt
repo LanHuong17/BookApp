@@ -1,14 +1,8 @@
 package com.example.bookapp.AdminActivity
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,10 +11,10 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.NotificationCompat
+import com.example.bookapp.Adapter.AdapterBookAdmin
 import com.example.bookapp.Func.MyApplication.Companion.sendNotification
 import com.example.bookapp.Model.ModelBook
-import com.example.bookapp.NotifyActivity
+import com.example.bookapp.Model.ModelCategory
 import com.example.bookapp.R
 import com.example.bookapp.databinding.ActivityAddChapterBinding
 import com.google.android.gms.tasks.Task
@@ -29,6 +23,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.storage.FirebaseStorage
 
 class AddChapterActivity : AppCompatActivity() {
@@ -40,6 +35,7 @@ class AddChapterActivity : AppCompatActivity() {
     private lateinit var bookArrayList: ArrayList<ModelBook>
     private var pdfUri: Uri? = null
     private var TAG = "CHAPTER_ADD_TAG"
+    private var isFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -62,7 +58,6 @@ class AddChapterActivity : AppCompatActivity() {
 
         binding.addChapter.setOnClickListener {
             validateData()
-//            Log.d(TAG, "Book Title: ${selectedBookTitle}, Chapter: ${title}, Date: $date")
         }
 
         binding.addPdfBtn.setOnClickListener {
@@ -73,7 +68,6 @@ class AddChapterActivity : AppCompatActivity() {
             categoryPickDialog()
         }
     }
-
 
     private fun categoryPickDialog() {
         Log.d(TAG, "categoryPickDialog: Showing pdf category pick dialog")
@@ -123,11 +117,6 @@ class AddChapterActivity : AppCompatActivity() {
     private var title = ""
     private var book = ""
 
-    private var selectedBookId = ""
-    private var selectedBookTitle = ""
-
-    private var isFavorite = false
-
     private fun validateData() {
         Log.d(TAG, "validateData: validating data")
 
@@ -175,6 +164,8 @@ class AddChapterActivity : AppCompatActivity() {
                 Toast.makeText(this, "Failed due to ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+    private var selectedBookId = ""
+    private var selectedBookTitle = ""
 
     private fun uploadPdfInfoToDb(uploadedPdfUrl: String, timestamp: Long) {
         Log.d(TAG, "uploadPdfInfoToDb: Loading to db")
@@ -286,5 +277,4 @@ class AddChapterActivity : AppCompatActivity() {
 
             })
     }
-
 }

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back01"
+    tools:context=".UserActivity.BookListActivity">
+
+    <RelativeLayout
+        android:id="@+id/toolbar1"
+        android:background="@drawable/shape_toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
+        <TextView
+            android:id="@+id/tvBook"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="Books"
+            android:layout_marginTop="5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:textSize="16sp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tvCategory"
+            android:textColor="@color/white"
+            android:layout_below="@+id/tvBook"
+            android:text="Category"
+            android:layout_marginTop="5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:layout_height="wrap_content"/>
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:src="@drawable/back_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        android:id="@+id/inputlayout"
+        android:layout_below="@id/toolbar1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp">
+        <EditText
+            android:id="@+id/tvSearch"
+            android:drawableEnd="@drawable/search_gray"
+            android:background="@drawable/shape_edittext01"
+            android:layout_width="match_parent"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_books"
+        tools:listitem="@layout/list_books"
+        android:layout_below="@+id/inputlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addChapter"
+        android:theme="@style/Theme.MaterialComponents.DayNight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5sp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/teal_700"
+        android:src="@drawable/chapter_gray"
+        app:fabCustomSize="50dp"
+        android:visibility="gone"/>
+
+
+</RelativeLayout>

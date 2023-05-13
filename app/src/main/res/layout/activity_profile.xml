@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_dynamic_tertiary95"
     tools:context=".ProfileActivity">
 
     <RelativeLayout
@@ -43,7 +42,22 @@
             android:background="@android:color/transparent"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"/>
+
     </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/notify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cover"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="30dp"
+        android:layout_toStartOf="@id/avatar"
+        android:backgroundTint="@color/teal_700"
+        android:src="@drawable/notify"
+        android:theme="@style/Theme.MaterialComponents.DayNight"
+        app:fabCustomSize="50dp" />
 
     <ImageButton
         android:id="@+id/cover"
@@ -57,22 +71,10 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginTop="130dp"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:background="@drawable/shape_toolbar3"
         android:src="@drawable/person_gray"
         android:layout_centerHorizontal="true"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/notifyBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cover"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/teal_700"
-        android:src="@drawable/notify"
-        android:theme="@style/Theme.MaterialComponents.DayNight"
-        app:fabCustomSize="50dp" />
 
     <TextView
         android:id="@+id/tvName"
@@ -173,7 +175,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_fav"
-        tools:listitem="@layout/list_favorite"
+        tools:listitem="@layout/list_books"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/tbl"
         android:layout_width="match_parent"

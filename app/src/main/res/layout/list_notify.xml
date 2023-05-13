@@ -9,6 +9,7 @@
     app:contentPadding="5dp">
 
     <RelativeLayout
+        android:id="@+id/notifyView"
         android:layout_width="match_parent"
         android:layout_height="85dp">
 

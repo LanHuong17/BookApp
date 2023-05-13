@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookapp.Func.MyApplication
 import com.example.bookapp.ReadBookActivity
@@ -27,6 +28,8 @@ class AdapterNotify : RecyclerView.Adapter<AdapterNotify.ModelNotify> {
         var tvDate = binding.tvDate
         var pdfView: PDFView = binding.pdfView
         var progressBar: ProgressBar = binding.progressBar
+        var notifyView: RelativeLayout = binding.notifyView
+
     }
 
 
@@ -63,4 +66,5 @@ class AdapterNotify : RecyclerView.Adapter<AdapterNotify.ModelNotify> {
     override fun getItemCount(): Int {
         return notifyArrayList.size
     }
+
 }

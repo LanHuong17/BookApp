@@ -51,7 +51,6 @@ class MyApplication: Application() {
             return format.format(date)
         }
 
-
         fun loadPdfFromUrlSinglePage(
             pdfUrl: String,
             pdfTitle: String,
@@ -284,6 +283,9 @@ class MyApplication: Application() {
 
             notificationManager.notify(notificationId, builder.build())
         }
+
+
+
 
     }
 
