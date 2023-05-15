@@ -3,174 +3,166 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UserActivity.ProfileFragment">
 
-    <ImageButton
-        android:id="@+id/cover"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:src="@drawable/cover2"/>
+        android:layout_height="match_parent">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/avatar"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_marginTop="60dp"
-        android:scaleType="centerCrop"
-        android:background="@drawable/shape_toolbar3"
-        android:src="@drawable/person_gray"
-        android:layout_centerHorizontal="true"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/editProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/avatar"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="110dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/edit_gray" />
+            <ImageButton
+                android:id="@+id/cover"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@drawable/cover2"/>
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_below="@id/avatar"
-        android:layout_centerHorizontal="true"
-        android:text="Username"
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        style="@style/TextAppearance.AppCompat.Headline"
-        android:textStyle="bold"
-        android:layout_height="wrap_content"/>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/avatar"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_marginTop="60dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/shape_toolbar3"
+                android:src="@drawable/person_gray"
+                android:layout_centerHorizontal="true"/>
 
-    <TextView
-        android:id="@+id/tvEmail"
-        android:layout_below="@id/tvName"
-        android:layout_centerHorizontal="true"
-        android:text="abc@gmail.com"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <TableLayout
-        android:id="@+id/tbl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/tvEmail">
-
-        <TableRow>
-
-            <TextView
-                android:id="@+id/tvAccount"
+            <ImageButton
+                android:id="@+id/editProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Account"
-                android:textSize="16sp"
+                android:layout_alignBottom="@+id/avatar"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="110dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/edit_gray" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_below="@id/avatar"
+                android:layout_centerHorizontal="true"
+                android:text="Username"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                style="@style/TextAppearance.AppCompat.Headline"
                 android:textStyle="bold"
-                android:layout_marginStart="30dp"
-                android:textColor="@color/black"
-                android:layout_marginEnd="40dp" />
+                android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/tvMember"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Member Date"
-                android:textSize="16sp"
+                android:id="@+id/tvEmail"
+                android:layout_below="@id/tvName"
+                android:layout_centerHorizontal="true"
+                android:text="abc@gmail.com"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:textSize="16dp"
                 android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_marginEnd="40dp" />
-            <TextView
-                android:id="@+id/tvFavorite"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TableLayout
+                android:id="@+id/tbl"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Favorite Book"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_marginEnd="40dp" />
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/tvEmail">
 
-        </TableRow>
+                <TableRow>
 
-        <TableRow>
+                    <TextView
+                        android:id="@+id/tvAccount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Account"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="30dp"
+                        android:textColor="@color/black"
+                        android:layout_marginEnd="40dp" />
 
-            <TextView
-                android:id="@+id/tvSubAcc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="NA"
-                android:textSize="14sp"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="10dp" />
+                    <TextView
+                        android:id="@+id/tvMember"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Member Date"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginEnd="40dp" />
+                    <TextView
+                        android:id="@+id/tvFavorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Favorite Book"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginEnd="40dp" />
 
-            <TextView
-                android:id="@+id/tvSubMem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:text="N/A"
-                android:layout_marginEnd="10dp" />
+                </TableRow>
 
-            <TextView
-                android:id="@+id/tvSubFav"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:text="N/A"
-                android:layout_marginEnd="10dp" />
+                <TableRow>
 
-        </TableRow>
+                    <TextView
+                        android:id="@+id/tvSubAcc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NA"
+                        android:textSize="14sp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="10dp" />
+
+                    <TextView
+                        android:id="@+id/tvSubMem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="N/A"
+                        android:layout_marginEnd="10dp" />
+
+                    <TextView
+                        android:id="@+id/tvSubFav"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="N/A"
+                        android:layout_marginEnd="10dp" />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_below="@id/tbl"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                app:tabMode="fixed"
+                app:tabBackground="@color/gray_2"
+                app:tabTextColor="@color/gray"
+                app:tabIndicatorGravity="stretch"
+                app:tabIndicatorAnimationMode="elastic"
+                app:tabSelectedTextColor="@color/black"
+                app:tabIndicatorColor="@null"
+                android:layout_height="wrap_content"/>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager"
+                android:layout_below="@id/tab_layout"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 
 
-    </TableLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_fav"
-        tools:listitem="@layout/list_favorite"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/tbl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-<!--    <TextView-->
-<!--        android:id="@+id/editProfile"-->
-<!--        android:layout_width="300dp"-->
-<!--        android:layout_height="80dp"-->
-<!--        android:layout_below="@id/tbl"-->
-<!--        android:layout_marginLeft="20dp"-->
-<!--        android:layout_marginTop="30dp"-->
-<!--        android:background="@drawable/layout_btn"-->
-<!--        android:drawableTop="@drawable/ic_baseline_edit_calendar_24"-->
-<!--        android:gravity="center"-->
-<!--        android:text="Edit Profile"-->
-<!--        android:textAlignment="center"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:textSize="20dp"-->
-<!--        android:textStyle="bold"-->
-<!--        android:layout_centerHorizontal="true"/>-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/about"-->
-<!--        android:layout_width="300dp"-->
-<!--        android:layout_height="80dp"-->
-<!--        android:layout_below="@id/editProfile"-->
-<!--        android:layout_marginLeft="20dp"-->
-<!--        android:layout_marginTop="30dp"-->
-<!--        android:background="@drawable/layout_btn"-->
-<!--        android:drawableTop="@drawable/ic_baseline_person_search_24"-->
-<!--        android:gravity="center"-->
-<!--        android:text="About Us"-->
-<!--        android:textAlignment="center"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:textSize="20dp"-->
-<!--        android:textStyle="bold"-->
-<!--        android:layout_centerHorizontal="true"/>-->
 
 
 </RelativeLayout>
