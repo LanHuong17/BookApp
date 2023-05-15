@@ -6,10 +6,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.bookapp.Adapter.AdapterBookAdmin
-import com.example.bookapp.Adapter.AdapterCategory
 import com.example.bookapp.Adapter.AdapterFavorite
-import com.example.bookapp.AdminActivity.AddCategoryActivity
 import com.example.bookapp.Func.MyApplication
 import com.example.bookapp.Model.ModelBook
 import com.example.bookapp.databinding.ActivityProfileBinding
@@ -49,6 +46,10 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.notify.setOnClickListener {
             startActivity(Intent(this, NotifyActivity::class.java))
+        }
+
+        binding.moveToHome.setOnClickListener {
+            startActivity(Intent(this, DashboardUserActivity::class.java))
         }
 
         loadProfileInfo()

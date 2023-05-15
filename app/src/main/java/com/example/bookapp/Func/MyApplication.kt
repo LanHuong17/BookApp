@@ -5,12 +5,18 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
+import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.example.bookapp.AdminActivity.AddChapterActivity
 import com.example.bookapp.NotifyActivity
 import com.example.bookapp.R
@@ -23,6 +29,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import org.json.JSONException
+import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -36,9 +44,13 @@ class MyApplication: Application() {
         super.onCreate()
     }
 
+
     private lateinit var firebaseAuth: FirebaseAuth
 
     companion object {
+
+        const val TAG = "FCM_SEND"
+
         fun formatTimeStamp(timestamp: String): String {
             val cal = Calendar.getInstance(Locale.ENGLISH)
             cal.timeInMillis = timestamp.toLong()
@@ -282,6 +294,46 @@ class MyApplication: Application() {
                 .setContentIntent(pendingIntent) // Đặt Intent xử lý sự kiện
 
             notificationManager.notify(notificationId, builder.build())
+        }
+
+        val BASE_URL = "https://fcm.googleapis.com/fcm/send"
+        val SERVER_KEY = "key=AAAA4ERbNzo:APA91bHgLahVSfGeddPY58gzkiVvaePKtAena9nHiTBMq7ZyxZT6eb7g_TaZS-Ry_vgx-5B5bI_yZrGkF2nZMNazdZeJDHEwHlHxY5-KTFZ2e0dFzNdYm2uJKc4yH3u3qU4sv7kogIER"
+
+        fun pushNotification(context: Context, token:String, title:String, message:String) {
+            val policy: StrictMode.ThreadPolicy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+
+            val queue: RequestQueue = Volley.newRequestQueue(context)
+
+            try {
+                val json = JSONObject()
+                json.put("to", token)
+                val notification = JSONObject()
+                notification.put("title", title)
+                notification.put("body", message)
+                json.put("notification", notification)
+
+                val jsonObjectRequest = object : JsonObjectRequest(
+                    Request.Method.POST, BASE_URL, json,
+                    Response.Listener<JSONObject> { response ->
+                        Log.d(TAG, "FCM: response: $response")
+                    },
+                    Response.ErrorListener { error ->
+                        Log.d(TAG, "FCM: failed: $error")
+                    }) {
+                    override fun getHeaders(): MutableMap<String, String> {
+                        val params: MutableMap<String, String> = HashMap()
+                        params["Content-Type"] = "application/json"
+                        params["Authorization"] = SERVER_KEY
+                        return params
+                    }
+                }
+
+                queue.add(jsonObjectRequest)
+
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
         }
 
 

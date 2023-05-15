@@ -3,6 +3,7 @@ package com.example.bookapp.UserActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -74,8 +75,13 @@ class CategoryFragment : Fragment() {
                 binding.listCategories.layoutManager = layoutManager
 
                 if (categoryArrayList.isNotEmpty()) {
-                    adapterCategoryUser = AdapterCategoryUser(context!!, categoryArrayList)
-                    binding.listCategories.adapter = adapterCategoryUser
+                    if(context == null) {
+                        Log.d("CHECK NULL", "Check null: Context is null")
+                    } else {
+                        adapterCategoryUser = AdapterCategoryUser(context!!, categoryArrayList)
+                        binding.listCategories.adapter = adapterCategoryUser
+                    }
+
                 } else {
 
                 }

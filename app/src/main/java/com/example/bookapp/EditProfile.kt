@@ -40,9 +40,6 @@ class EditProfile : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        progressDialog = ProgressDialog(this)
-        progressDialog.setTitle("Please wait")
-        progressDialog.setCanceledOnTouchOutside(false)
 
         firebaseAuth = FirebaseAuth.getInstance()
         loadUserInfo()
@@ -58,6 +55,14 @@ class EditProfile : AppCompatActivity() {
         binding.avatar.setOnClickListener {
             pickImageGallery()
         }
+
+//        binding.cover.setOnClickListener {
+//            pickImageGallery()
+//        }
+
+        progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("Please wait")
+        progressDialog.setCanceledOnTouchOutside(false)
     }
 
     private var name = ""
@@ -69,12 +74,12 @@ class EditProfile : AppCompatActivity() {
             if (imageUri == null) {
                 updateProfile("")
             } else {
-                uploadImage()
+                uploadAvatarImage()
             }
         }
     }
 
-    private fun uploadImage() {
+    private fun uploadAvatarImage() {
         val filePathName = "ProfileImage/"+firebaseAuth.uid
 
         val reference = FirebaseStorage.getInstance().getReference(filePathName)
@@ -83,18 +88,22 @@ class EditProfile : AppCompatActivity() {
                 val uriTask: Task<Uri> = taskSnapshot.storage.downloadUrl
                 while (!uriTask.isSuccessful);
                 val uploadedImageUrl = "${uriTask.result}"
+
+
                 updateProfile(uploadedImageUrl)
+
             }
             .addOnFailureListener { e->
                 Toast.makeText(this, "Failed: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
-    private fun updateProfile(uploadedImageUrl: String) {
+
+    private fun updateProfile(uploadedAvatarImageUrl: String) {
         val hashMap: HashMap<String, Any> = HashMap()
         hashMap["name"] = "$name"
         if (imageUri != null) {
-            hashMap["profileImage"] = uploadedImageUrl
+            hashMap["profileImage"] = uploadedAvatarImageUrl
         }
 
         val reference = FirebaseDatabase.getInstance().getReference("Users")
@@ -109,6 +118,7 @@ class EditProfile : AppCompatActivity() {
     }
 
     private fun loadUserInfo() {
+
         val ref = FirebaseDatabase.getInstance().getReference("Users")
         ref.child(firebaseAuth.uid!!)
             .addValueEventListener(object : ValueEventListener {
@@ -141,7 +151,7 @@ class EditProfile : AppCompatActivity() {
     private fun pickImageGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
-        galleryActivityResultLauncher.launch(intent)
+        galleryActivityResultLauncher.launch(intent) // load ảnh lên
     }
 
     private var galleryActivityResultLauncher = registerForActivityResult(
