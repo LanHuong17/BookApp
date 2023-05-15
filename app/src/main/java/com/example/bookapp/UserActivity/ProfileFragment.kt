@@ -2,6 +2,7 @@ package com.example.bookapp.UserActivity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -49,8 +50,6 @@ class ProfileFragment : Fragment() {
         binding.editProfile.setOnClickListener {
             startActivity(Intent(context, EditProfile::class.java))
         }
-
-
 
         return binding.root
     }
@@ -116,10 +115,14 @@ class ProfileFragment : Fragment() {
                     binding.listFav.layoutManager = layoutManager
 
                     if (favArrayList.isNotEmpty()) {
-                        adapterFavorite = AdapterFavorite(context!!, favArrayList)
-                        binding.listFav.adapter = adapterFavorite
+                        if (context == null) {
+                            Log.d("CHECK NULL", "Check Null: context is null")
+                        } else {
+                            adapterFavorite = AdapterFavorite(context!!, favArrayList)
+                            binding.listFav.adapter = adapterFavorite
+                        }
                     } else {
-
+                        //...
                     }
 
                     binding.listFav.layoutManager= GridLayoutManager(

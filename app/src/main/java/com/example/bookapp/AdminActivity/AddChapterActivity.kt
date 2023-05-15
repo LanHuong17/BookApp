@@ -11,11 +11,8 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import com.example.bookapp.Adapter.AdapterBookAdmin
-import com.example.bookapp.Func.MyApplication.Companion.sendNotification
+import com.example.bookapp.Func.MyApplication
 import com.example.bookapp.Model.ModelBook
-import com.example.bookapp.Model.ModelCategory
-import com.example.bookapp.R
 import com.example.bookapp.databinding.ActivityAddChapterBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -23,7 +20,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.storage.FirebaseStorage
 
 class AddChapterActivity : AppCompatActivity() {
@@ -265,7 +261,14 @@ class AddChapterActivity : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     isFavorite = snapshot.exists()
                     if (isFavorite) {
-                        sendNotification(this@AddChapterActivity, "BookApp","$selectedBookTitle has new chapter")
+//                        sendNotification(this@AddChapterActivity, "BookApp","$selectedBookTitle has new chapter")
+                        Log.d(TAG, "FCM: is favorite")
+                        MyApplication.pushNotification(
+                            this@AddChapterActivity,
+                            "dHBvr0vxQvWhPMeKbtDibK:APA91bHzdL0QdJI6OuHsgrdQmieqTp8Qr4r9P9qLU73g9iGlrP9ni7_Dq4KlCxCguSxbmpWF3EikpuP-TdK36Rz80XNlhSucdG5VQjEieZj1Dm9rHi0XbPKFRxjaFqeJpXjFJxJmVmN5",
+                            "Book App",
+                            "$selectedBookTitle has been added new chapter!"
+                        )
                     } else {
                         //...
                     }
@@ -277,4 +280,8 @@ class AddChapterActivity : AppCompatActivity() {
 
             })
     }
+
+    //Token : dHBvr0vxQvWhPMeKbtDibK:APA91bHzdL0QdJI6OuHsgrdQmieqTp8Qr4r9P9qLU73g9iGlrP9ni7_Dq4KlCxCguSxbmpWF3EikpuP-TdK36Rz80XNlhSucdG5VQjEieZj1Dm9rHi0XbPKFRxjaFqeJpXjFJxJmVmN5
+
+
 }

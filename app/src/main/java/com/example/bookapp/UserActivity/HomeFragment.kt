@@ -3,6 +3,7 @@ package com.example.bookapp.UserActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,19 +14,22 @@ import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.bookapp.Adapter.AdapterAllBook
 import com.example.bookapp.Adapter.AdapterBookAdmin
 import com.example.bookapp.Adapter.AdapterBookUser
+import com.example.bookapp.Adapter.AdapterFavorite
 import com.example.bookapp.Model.ModelBook
 import com.example.bookapp.databinding.FragmentHomeBinding
 import com.example.bookapp.databinding.ListBooksItemBinding
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.core.Context
+import com.google.firebase.messaging.FirebaseMessaging
 
 
 class HomeFragment : Fragment {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var subBinding: ListBooksItemBinding
-    private var isMostViewed: Boolean = true
 
     private companion object {
         const val TAG = "BOOKS_USER_TAG"
@@ -74,6 +78,7 @@ class HomeFragment : Fragment {
         loadAllBooks()
         loadMostViewedBooks()
         loadMostDownloadedBooks()
+        checkToken()
 
 
         binding.tvSearch.addTextChangedListener(object : TextWatcher {
@@ -111,9 +116,21 @@ class HomeFragment : Fragment {
 
         })
 
-
-
         return binding.root
+    }
+
+    private fun checkToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+            Log.d(TAG, "Token : $token")
+
+        })
     }
 
     private fun loadMostDownloadedBooks() {
@@ -128,15 +145,22 @@ class HomeFragment : Fragment {
                         //get data
                         val model = ds.getValue(ModelBook::class.java)
                         //add to list
-                        downloadArrayList.add(model!!)
+                        if (model != null) {
+                            downloadArrayList.add(model)
+                        }
                     }
                     //setup adapter
                     val layoutManager = LinearLayoutManager(context)
                     binding.rcv2.layoutManager = layoutManager
 
                     if (downloadArrayList.isNotEmpty()) {
-                        adapterBookUser = AdapterBookUser(context!!, downloadArrayList)
-                        binding.rcv2.adapter = adapterBookUser
+                        if(context == null) {
+                            Log.d(TAG, "Check null: Context is null")
+                        } else {
+                            adapterBookUser = AdapterBookUser(context!!, downloadArrayList)
+                            binding.rcv2.adapter = adapterBookUser
+                        }
+
                     } else {
                         //...
                     }
@@ -168,15 +192,24 @@ class HomeFragment : Fragment {
                         //get data
                         val model = ds.getValue(ModelBook::class.java)
                         //add to list
-                        viewArrayList.add(model!!)
+                        if (model != null) {
+                            viewArrayList.add(model)
+                        }
+
                     }
                     //setup adapter
                     val layoutManager = LinearLayoutManager(context)
                     binding.rcv1.layoutManager = layoutManager
 
+
                     if (viewArrayList.isNotEmpty()) {
-                        adapterBookUser = AdapterBookUser(context!!, viewArrayList)
-                        binding.rcv1.adapter = adapterBookUser
+                        if(context == null) {
+                            Log.d(TAG, "Check null: Context is null")
+                        } else {
+                            adapterBookUser = AdapterBookUser(context = context!!, viewArrayList)
+                            binding.rcv1.adapter = adapterBookUser
+                        }
+
                     } else {
                         //...
                     }
@@ -198,22 +231,29 @@ class HomeFragment : Fragment {
     private fun loadAllBooks() {
         pdfArrayList = ArrayList()
         var ref = FirebaseDatabase.getInstance().getReference("Books")
-        ref.limitToFirst(10).addValueEventListener(object : ValueEventListener{
+        ref.limitToFirst(5).addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 pdfArrayList.clear()
                 for(ds in snapshot.children){
                     //get data
                     val model = ds.getValue(ModelBook::class.java)
                     //add to list
-                    pdfArrayList.add(model!!)
+                    if (model != null) {
+                        pdfArrayList.add(model)
+                    }
                 }
                 //setup adapter
                 val layoutManager = LinearLayoutManager(context)
                 binding.rcv3.layoutManager = layoutManager
 
                 if (pdfArrayList.isNotEmpty()) {
-                    adapterAllBook = AdapterAllBook(context!!, pdfArrayList)
-                    binding.rcv3.adapter = adapterAllBook
+                    if(context == null) {
+                        Log.d(TAG, "Check null: Context is null")
+                    } else {
+                        adapterAllBook = AdapterAllBook(context!!, pdfArrayList)
+                        binding.rcv3.adapter = adapterAllBook
+                    }
+
                 } else {
                     //...
                 }

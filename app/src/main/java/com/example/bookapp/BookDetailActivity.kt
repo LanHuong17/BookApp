@@ -114,6 +114,7 @@ class BookDetailActivity : AppCompatActivity() {
                     if (commentArrayList.isNotEmpty()) {
                         adapterComment = AdapterComment(this@BookDetailActivity, commentArrayList)
                         binding.listComments.adapter = adapterComment
+                        binding.tvComment.text = "Comments (${commentArrayList.size})"
                     } else {
                         //...
                     }
@@ -252,6 +253,7 @@ class BookDetailActivity : AppCompatActivity() {
                     if (chapterArrayList.isNotEmpty()) {
                         adapterChapter = AdapterChapterAdmin(this@BookDetailActivity, chapterArrayList)
                         binding.listChapters.adapter = adapterChapter
+                        binding.tvTotalChapter.text = chapterArrayList.size.toString()
                     } else {
                         //...
                     }

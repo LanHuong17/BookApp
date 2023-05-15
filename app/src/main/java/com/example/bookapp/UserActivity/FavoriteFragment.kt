@@ -1,6 +1,7 @@
 package com.example.bookapp.UserActivity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,6 @@ import com.example.bookapp.Adapter.AdapterFavorite
 import com.example.bookapp.Func.MyApplication
 import com.example.bookapp.Model.ModelBook
 import com.example.bookapp.R
-import com.example.bookapp.databinding.ActivityProfileBinding
 import com.example.bookapp.databinding.FragmentFavoriteBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -66,10 +66,14 @@ class FavoriteFragment : Fragment() {
                     binding.listFav.layoutManager = layoutManager
 
                     if (favArrayList.isNotEmpty()) {
-                        adapterFavorite = AdapterFavorite(context!!, favArrayList)
-                        binding.listFav.adapter = adapterFavorite
+                        if (context == null) {
+                            Log.d(TAG, "Check Null: context is null")
+                        } else {
+                            adapterFavorite = AdapterFavorite(context!!, favArrayList)
+                            binding.listFav.adapter = adapterFavorite
+                        }
                     } else {
-
+                        //...
                     }
 
                     binding.listFav.layoutManager= GridLayoutManager(
