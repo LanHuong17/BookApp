@@ -1,12 +1,14 @@
 package com.example.bookapp.UserActivity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.inflate
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bookapp.Adapter.AdapterFavorite
 import com.example.bookapp.Adapter.AdapterNotify
 import com.example.bookapp.Model.ModelNotify
 import com.example.bookapp.databinding.ActivityAddBookBinding.inflate
@@ -76,10 +78,14 @@ class NotifyFragment : Fragment() {
                         binding.notifyLists.layoutManager = layoutManager
 
                         if (filteredList.isNotEmpty()) {
-                            adapterNotify = AdapterNotify(context!!,
-                                filteredList as ArrayList<ModelNotify>
-                            )
-                            binding.notifyLists.adapter = adapterNotify
+                            if (context == null) {
+                                Log.d("CHECK NULL", "Check Null: context is null")
+                            } else {
+                                adapterNotify = AdapterNotify(context!!,
+                                    filteredList as ArrayList<ModelNotify>
+                                )
+                                binding.notifyLists.adapter = adapterNotify
+                            }
                         } else {
                             //...
                         }
