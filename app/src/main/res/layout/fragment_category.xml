@@ -17,16 +17,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/tvSearch"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/shape_edittext01"
-            android:drawableEnd="@drawable/search_gray"
-            android:drawablePadding="10dp"
-            android:padding="10dp"
-            android:textColor="@color/black" />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/tvSearch"
+                android:layout_width="355dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/shape_edittext01"
+                android:drawablePadding="10dp"
+                android:drawableEnd="@drawable/search_gray"
+                android:padding="10dp"
+                android:textColor="@color/black" />
+
+            <ImageButton
+                android:id="@+id/voiceBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/tvSearch"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_keyboard_voice_24" />
+        </RelativeLayout>
 
     </com.google.android.material.textfield.TextInputLayout>
 

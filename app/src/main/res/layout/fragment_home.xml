@@ -18,17 +18,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/tvSearch"
-            android:layout_width="match_parent"
+            android:layout_width="355dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="@drawable/shape_edittext01"
-            android:drawableEnd="@drawable/search_gray"
             android:drawablePadding="10dp"
+            android:drawableEnd="@drawable/search_gray"
             android:padding="10dp"
             android:textColor="@color/black" />
+
+            <ImageButton
+                android:id="@+id/voiceBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/tvSearch"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_keyboard_voice_24" />
+        </RelativeLayout>
+
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -45,19 +60,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.smarteist.autoimageslider.SliderView
-                android:id="@+id/sliderView"
-                android:layout_width="405dp"
-                android:layout_height="203dp"
-                android:background="@drawable/bs"
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/image_slider"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:iss_auto_cycle="true"
+                app:iss_delay="5000"
+                app:iss_period="3000"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:sliderIndicatorSelectedColor="#F1B814"
-                app:sliderIndicatorUnselectedColor="#C6C2C2"
-                tools:ignore="MissingConstraints">
-
-            </com.smarteist.autoimageslider.SliderView>
+                tools:ignore="MissingConstraints"
+                app:iss_no_dots="true">
+            </com.denzcoskun.imageslider.ImageSlider>
 
             <TextView
                 android:id="@+id/textView1"
@@ -71,7 +87,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.02"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sliderView" />
+                app:layout_constraintTop_toBottomOf="@+id/image_slider" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcv1"

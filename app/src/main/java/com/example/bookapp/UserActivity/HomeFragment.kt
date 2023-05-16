@@ -1,6 +1,11 @@
 package com.example.bookapp.UserActivity
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -8,14 +13,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
-import com.example.bookapp.Adapter.AdapterAllBook
-import com.example.bookapp.Adapter.AdapterBookAdmin
-import com.example.bookapp.Adapter.AdapterBookUser
-import com.example.bookapp.Adapter.AdapterFavorite
+import androidx.viewpager2.widget.ViewPager2
+import com.denzcoskun.imageslider.models.SlideModel
+import com.example.bookapp.Adapter.*
 import com.example.bookapp.Model.ModelBook
+import com.example.bookapp.R
 import com.example.bookapp.databinding.FragmentHomeBinding
 import com.example.bookapp.databinding.ListBooksItemBinding
 import com.google.android.gms.tasks.OnCompleteListener
@@ -25,6 +35,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.core.Context
 import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.coroutines.delay
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.toString as toString1
 
 
 class HomeFragment : Fragment {
@@ -56,6 +70,9 @@ class HomeFragment : Fragment {
     lateinit var pdfArrayList: ArrayList<ModelBook>
     private lateinit var adapterBookUser: AdapterBookUser
     private lateinit var adapterAllBook: AdapterAllBook
+    private lateinit var sliderView: ViewPager2
+    private val REQUEST_CODE_SPEECH_INPUT = 1
+
 
     constructor()
 
@@ -75,11 +92,14 @@ class HomeFragment : Fragment {
         binding = FragmentHomeBinding.inflate(LayoutInflater.from(context), container, false)
         subBinding = ListBooksItemBinding.inflate(LayoutInflater.from(context), container, false)
 
+        loadSliders()
         loadAllBooks()
         loadMostViewedBooks()
         loadMostDownloadedBooks()
         checkToken()
-
+        binding.voiceBtn.setOnClickListener{
+            askSpeechInput()
+        }
 
         binding.tvSearch.addTextChangedListener(object : TextWatcher {
 
@@ -89,7 +109,7 @@ class HomeFragment : Fragment {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 try {
-                    binding.sliderView.visibility= View.GONE
+                    binding.imageSlider.visibility= View.GONE
                     binding.textView1.visibility= View.GONE
                     binding.textView2.visibility= View.GONE
                     binding.textView3.visibility= View.GONE
@@ -97,7 +117,7 @@ class HomeFragment : Fragment {
                     binding.rcv2.visibility= View.GONE
 
                     if(binding.tvSearch.text.isEmpty()){
-                        binding.sliderView.visibility= View.VISIBLE
+                        binding.imageSlider.visibility= View.VISIBLE
                         binding.textView1.visibility= View.VISIBLE
                         binding.textView2.visibility= View.VISIBLE
                         binding.textView3.visibility= View.VISIBLE
@@ -117,6 +137,57 @@ class HomeFragment : Fragment {
         })
 
         return binding.root
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE_SPEECH_INPUT) {
+            if (resultCode == RESULT_OK && data != null) {
+
+                val res: ArrayList<String> =
+                    data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS) as ArrayList<String>
+                binding.tvSearch.setText(
+                    Objects.requireNonNull(res)[0]
+                )
+            }
+        }
+    }
+
+    private fun askSpeechInput() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+        )
+        intent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE,
+            Locale.getDefault()
+        )
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to text")
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT)
+        } catch (e: Exception) {
+            Toast
+                .makeText(context, " " + e.message,
+                    Toast.LENGTH_SHORT
+                )
+                .show()
+        }
+    }
+
+    private fun loadSliders() {
+        val imageList = ArrayList<SlideModel>() // Create image list
+
+// imageList.add(SlideModel("String Url" or R.drawable)
+// imageList.add(SlideModel("String Url" or R.drawable, "title") You can add title
+
+        imageList.add(SlideModel(R.drawable.bs))
+        imageList.add(SlideModel(R.drawable.bs1))
+        imageList.add(SlideModel(R.drawable.bs2))
+
+        val imageSlider = binding.imageSlider
+        imageSlider.setImageList(imageList)
     }
 
     private fun checkToken() {

@@ -1,6 +1,9 @@
 package com.example.bookapp.UserActivity
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -8,6 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookapp.Adapter.AdapterCategory
 import com.example.bookapp.Adapter.AdapterCategoryUser
@@ -19,18 +23,24 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CategoryFragment : Fragment() {
 
     private lateinit var binding: FragmentCategoryBinding
     private lateinit var categoryArrayList: ArrayList<ModelCategory>
     private lateinit var adapterCategoryUser: AdapterCategoryUser
+    private val REQUEST_CODE_SPEECH_INPUT = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentCategoryBinding.inflate(LayoutInflater.from(context), container, false)
 
         displayCategory()
+        binding.voiceBtn.setOnClickListener{
+            askSpeechInput()
+        }
 
         binding.tvSearch.addTextChangedListener(object : TextWatcher {
 
@@ -53,6 +63,43 @@ class CategoryFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE_SPEECH_INPUT) {
+            if (resultCode == RESULT_OK && data != null) {
+
+                val res: ArrayList<String> =
+                    data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS) as ArrayList<String>
+                binding.tvSearch.setText(
+                    Objects.requireNonNull(res)[0]
+                )
+            }
+        }
+    }
+
+    private fun askSpeechInput() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+        )
+        intent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE,
+            Locale.getDefault()
+        )
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to text")
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT)
+        } catch (e: Exception) {
+            Toast
+                .makeText(context, " " + e.message,
+                    Toast.LENGTH_SHORT
+                )
+                .show()
+        }
     }
 
     private fun displayCategory() {

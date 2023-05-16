@@ -61,6 +61,7 @@
                 android:theme="@style/TextLabel"
                 android:layout_below="@+id/inputlayout_01"
                 app:passwordToggleEnabled="true"
+                app:hintEnabled="false"
                 android:layout_height="wrap_content">
                 <EditText
                     android:id="@+id/tvPass"

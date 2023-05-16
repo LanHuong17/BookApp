@@ -146,4 +146,30 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <TextView
+        android:id="@+id/noAcc"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="176dp"
+        android:drawableBottom="@drawable/ic_baseline_person_24"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="The Function is Locked. Please Login to Use"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+    <Button
+        android:id="@+id/loginBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_below="@id/noAcc"
+        android:layout_centerInParent="true"
+        android:text="LOGIN"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/black"
+        />
+
 </RelativeLayout>

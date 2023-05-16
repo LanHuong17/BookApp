@@ -15,6 +15,7 @@ import com.example.bookapp.Adapter.AdapterFavorite
 import com.example.bookapp.Adapter.AdapterFragmentPage
 import com.example.bookapp.EditProfile
 import com.example.bookapp.Func.MyApplication
+import com.example.bookapp.LoginActivity
 import com.example.bookapp.Model.ModelBook
 import com.example.bookapp.R
 import com.example.bookapp.databinding.FragmentProfileBinding
@@ -45,50 +46,68 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(LayoutInflater.from(context), container, false)
         firebaseAuth = FirebaseAuth.getInstance()
 
+        checkUser()
 
-        loadProfileInfo()
+        return binding.root
+    }
+
+    private fun checkUser() {
+        val firebaseUser = firebaseAuth.currentUser
+        if (firebaseUser == null) {
+            binding.noAcc.visibility = View.VISIBLE
+            binding.loginBtn.visibility = View.VISIBLE
+            binding.layout.visibility = View.GONE
+            binding.loginBtn.setOnClickListener{
+                startActivity(Intent(context, LoginActivity::class.java))
+            }
+        } else {
+            binding.noAcc.visibility = View.GONE
+            binding.loginBtn.visibility = View.GONE
+            binding.layout.visibility = View.VISIBLE
+
+            loadProfileInfo()
 //        loadFavoriteBook()
 
 //        binding1.removeFavorite.visibility=View.GONE
 
-        val tabLayout = binding.tabLayout
-        val viewPaper2 = binding.viewPager
-        adapterFragment = AdapterFragmentPage(requireActivity().supportFragmentManager, lifecycle)
+            val tabLayout = binding.tabLayout
+            val viewPaper2 = binding.viewPager
+            adapterFragment = AdapterFragmentPage(requireActivity().supportFragmentManager, lifecycle)
 
-        tabLayout.addTab(tabLayout.newTab().setText("Favorites"))
-        tabLayout.addTab(tabLayout.newTab().setText("Notification"))
+            tabLayout.addTab(tabLayout.newTab().setText("Favorites"))
+            tabLayout.addTab(tabLayout.newTab().setText("Notification"))
 
-        viewPaper2.adapter = adapterFragment
+            viewPaper2.adapter = adapterFragment
 
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                if (tab != null) {
-                    viewPaper2.currentItem = tab.position
+            tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    if (tab != null) {
+                        viewPaper2.currentItem = tab.position
+                    }
                 }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+                }
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+
+                }
+
+            })
+
+            viewPaper2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    tabLayout.selectTab(tabLayout.getTabAt(position))
+                }
+            })
+
+            binding.editProfile.setOnClickListener {
+                startActivity(Intent(context, EditProfile::class.java))
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
-
-        })
-
-        viewPaper2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                tabLayout.selectTab(tabLayout.getTabAt(position))
-            }
-        })
-
-        binding.editProfile.setOnClickListener {
-            startActivity(Intent(context, EditProfile::class.java))
         }
-
-        return binding.root
     }
 
     private fun loadProfileInfo() {

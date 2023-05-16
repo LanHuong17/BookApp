@@ -1,5 +1,6 @@
 package com.example.bookapp.UserActivity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,8 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.bookapp.Adapter.AdapterFavorite
 import com.example.bookapp.Func.MyApplication
+import com.example.bookapp.LoginActivity
 import com.example.bookapp.Model.ModelBook
 import com.example.bookapp.R
+import com.example.bookapp.RegisterActivity
 import com.example.bookapp.databinding.FragmentFavoriteBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -38,11 +41,31 @@ class FavoriteFragment : Fragment() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
+        checkUser()
+
 //        loadProfileInfo()
-        loadFavoriteBook()
+
 
         return binding.root
     }
+
+    private fun checkUser() {
+        val firebaseUser = firebaseAuth.currentUser
+        if (firebaseUser == null) {
+            binding.noAcc.visibility = View.VISIBLE
+            binding.loginBtn.visibility = View.VISIBLE
+            binding.listFav.visibility = View.GONE
+            binding.loginBtn.setOnClickListener{
+                startActivity(Intent(context, LoginActivity::class.java))
+            }
+        } else {
+            binding.noAcc.visibility = View.GONE
+            binding.loginBtn.visibility = View.GONE
+            binding.listFav.visibility = View.VISIBLE
+            loadFavoriteBook()
+        }
+    }
+
 
     private fun loadFavoriteBook() {
         favArrayList = ArrayList()
