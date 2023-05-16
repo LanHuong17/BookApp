@@ -32,8 +32,12 @@ class AddChapterActivity : AppCompatActivity() {
     private var pdfUri: Uri? = null
     private var TAG = "CHAPTER_ADD_TAG"
     private var isFavorite = false
+    private var categoryId = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val intent = intent
+        categoryId = intent.getStringExtra("categoryId")!!
 
         binding = ActivityAddChapterBinding.inflate(layoutInflater)
 
@@ -68,24 +72,55 @@ class AddChapterActivity : AppCompatActivity() {
     private fun categoryPickDialog() {
         Log.d(TAG, "categoryPickDialog: Showing pdf category pick dialog")
 
+        val ref = FirebaseDatabase.getInstance().getReference("Books")
+        ref.orderByChild("categoryId").equalTo(categoryId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    bookArrayList.clear()
+                    //get data
+                    for (ds in snapshot.children) {
+                        val model = ds.getValue(ModelBook::class.java)
+                        //add to list
+                        if (model != null) {
+                            bookArrayList.add(model)
+                        }
+
+                    }
+
+                    val booksArray = arrayOfNulls<String>(bookArrayList.size)
+                    for (i in bookArrayList.indices) {
+                        booksArray[i] = bookArrayList[i].title
+                    }
+
+                    val builder = AlertDialog.Builder(this@AddChapterActivity)
+                    builder.setTitle("Pick Book").setItems(booksArray) {
+                            dialog, which ->
+                        //get clicked item
+                        selectedBookTitle = bookArrayList[which].title
+                        selectedBookId = bookArrayList[which].id
+                        //set category to textview
+                        binding.pickBook.text = selectedBookTitle
+
+                        Log.d(TAG, "categoryPickDialog: Selected category: $selectedBookTitle")
+                    }.show()
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
+
+
         //get string array of cate from arraylist
-        val booksArray = arrayOfNulls<String>(bookArrayList.size)
-        for (i in bookArrayList.indices) {
-            booksArray[i] = bookArrayList[i].title
-        }
+//        val booksArray = arrayOfNulls<String>(bookArrayList.size)
+//        for (i in bookArrayList.indices) {
+//            booksArray[i] = bookArrayList[i].title
+//        }
 
         //alert dialog
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Pick Book").setItems(booksArray) {
-                dialog, which ->
-            //get clicked item
-            selectedBookTitle = bookArrayList[which].title
-            selectedBookId = bookArrayList[which].id
-            //set category to textview
-            binding.pickBook.text = selectedBookTitle
 
-            Log.d(TAG, "categoryPickDialog: Selected category: $selectedBookTitle")
-        }.show()
     }
 
     private fun pickPdfIntent() {
@@ -180,8 +215,8 @@ class AddChapterActivity : AppCompatActivity() {
         hashMap["viewCount"] = 0
         hashMap["downloadCount"] = 0
 
-        val ref = FirebaseDatabase.getInstance().getReference("Chapters")
-        ref.child("$timestamp")
+        val ref = FirebaseDatabase.getInstance().getReference("Books")
+        ref.child(selectedBookId).child("Chapters").child("$timestamp")
             .setValue(hashMap)
             .addOnSuccessListener {
                 Log.d(TAG, "uploadPdfInfoToDb: Uploaded")

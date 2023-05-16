@@ -194,10 +194,9 @@ class MyApplication: Application() {
                 }
         }
 
-        fun incrementChapterView(chapterId: String) {
-            val ref = FirebaseDatabase.getInstance().getReference("Chapters")
-            ref.child(chapterId)
-                .addListenerForSingleValueEvent(object : ValueEventListener {
+        fun incrementChapterView(chapterId: String, bookId: String) {
+            val ref = FirebaseDatabase.getInstance().getReference("Books").child(bookId).child("Chapters").child(chapterId)
+                ref.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         var viewCount = "${snapshot.child("viewCount").value}"
                         if (viewCount == "" || viewCount == "null") {
@@ -209,8 +208,8 @@ class MyApplication: Application() {
                         val hashMap = HashMap<String, Any>()
                         hashMap["viewCount"] = newViewCount
 
-                        val refView = FirebaseDatabase.getInstance().getReference("Chapters")
-                        refView.child(chapterId)
+                        val refView = FirebaseDatabase.getInstance().getReference("Books")
+                        refView.child(bookId).child("Chapters").child(chapterId)
                             .updateChildren(hashMap)
                     }
 
@@ -221,10 +220,12 @@ class MyApplication: Application() {
                 })
         }
 
-        fun incrementDownloadCount(chapterId: String) {
-            val ref = FirebaseDatabase.getInstance().getReference("Chapters")
-            ref.child(chapterId)
-                .addListenerForSingleValueEvent(object : ValueEventListener {
+
+
+        fun incrementDownloadCount(chapterId: String, bookId: String) {
+            val ref = FirebaseDatabase.getInstance().getReference("Books").child(bookId)
+                .child("Chapters").child(chapterId)
+                ref.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         var downloadCount = "${snapshot.child("downloadCount").value}"
                         if (downloadCount == "" || downloadCount == "null") {
@@ -236,8 +237,8 @@ class MyApplication: Application() {
                         val hashMap = HashMap<String, Any>()
                         hashMap["downloadCount"] = newDownloadCount
 
-                        val refView = FirebaseDatabase.getInstance().getReference("Chapters")
-                        refView.child(chapterId)
+                        val refView = FirebaseDatabase.getInstance().getReference("Books")
+                        refView.child(bookId).child("Chapters").child(chapterId)
                             .updateChildren(hashMap)
                     }
 
