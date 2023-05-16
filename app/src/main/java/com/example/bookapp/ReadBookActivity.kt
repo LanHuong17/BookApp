@@ -28,6 +28,7 @@ class ReadBookActivity : AppCompatActivity() {
     private lateinit var progressDialog: ProgressDialog
 
     var chapterId = ""
+    var bookId = ""
 
     var chapterTitle = ""
     var chapterUrl = ""
@@ -47,6 +48,7 @@ class ReadBookActivity : AppCompatActivity() {
         progressDialog.setCanceledOnTouchOutside(false)
 
         chapterId = intent.getStringExtra("chapterId")!!
+        bookId = intent.getStringExtra("bookId")!!
 
         binding.backBtn.setOnClickListener {
             onBackPressed()
@@ -65,7 +67,7 @@ class ReadBookActivity : AppCompatActivity() {
             }
         }
 
-        MyApplication.incrementChapterView(chapterId)
+        MyApplication.incrementChapterView(chapterId, bookId)
 
         loadChapterDetail()
     }
@@ -114,7 +116,7 @@ class ReadBookActivity : AppCompatActivity() {
 
         Toast.makeText(this, "Saved to download folder", Toast.LENGTH_SHORT).show()
         progressDialog.dismiss()
-        incrementDownloadCount(chapterId)
+        incrementDownloadCount(chapterId, bookId)
         try {
 
         } catch (e: Exception) {
@@ -126,8 +128,8 @@ class ReadBookActivity : AppCompatActivity() {
 
 
     private fun loadChapterDetail() {
-        val ref = FirebaseDatabase.getInstance().getReference("Chapters")
-        ref.child(chapterId)
+        val ref = FirebaseDatabase.getInstance().getReference("Books")
+        ref.child(bookId).child("Chapters").child(chapterId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -151,6 +153,7 @@ class ReadBookActivity : AppCompatActivity() {
 
     private fun loadChapterPdf(chapterUrl: String) {
         Log.d(TAG, "loadChapterPdf: get pdf from fb")
+
 
         val refPdf = FirebaseStorage.getInstance().getReferenceFromUrl(chapterUrl)
         refPdf.getBytes(Constants.MAX_BYTES_PDF)

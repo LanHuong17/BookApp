@@ -45,6 +45,8 @@ class BookDetailActivity : AppCompatActivity() {
     private var isFavorite = false
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityBookDetailBinding.inflate(layoutInflater)
 
@@ -230,8 +232,8 @@ class BookDetailActivity : AppCompatActivity() {
 
     private fun loadBookChapter() {
         chapterArrayList = ArrayList()
-        val ref = FirebaseDatabase.getInstance().getReference("Chapters")
-        ref.orderByChild("bookId").equalTo(bookId)
+        val ref = FirebaseDatabase.getInstance().getReference("Books")
+        ref.child(bookId).child("Chapters")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     //clear list
@@ -304,8 +306,8 @@ class BookDetailActivity : AppCompatActivity() {
 
     fun calculateTotalViewCount(bookId: String) {
         var totalViewCount = 0L
-        val ref = FirebaseDatabase.getInstance().getReference("Chapters")
-        ref.orderByChild("bookId").equalTo(bookId)
+        val ref = FirebaseDatabase.getInstance().getReference("Books")
+        ref.child(bookId).child("Chapters")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (chapterSnapshot in snapshot.children) {
@@ -336,8 +338,8 @@ class BookDetailActivity : AppCompatActivity() {
     }
 
     fun calculateTotalDownloadCount(bookId: String) {
-        val ref = FirebaseDatabase.getInstance().getReference("Chapters")
-        ref.orderByChild("bookId").equalTo(bookId)
+        val ref = FirebaseDatabase.getInstance().getReference("Books")
+        ref.child(bookId).child("Chapters")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     var totalDownloadCount = 0L

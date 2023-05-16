@@ -47,7 +47,9 @@ class BookListAdminActivity : AppCompatActivity() {
         }
 
         binding.addChapter.setOnClickListener {
-            startActivity(Intent(this, AddChapterActivity::class.java))
+            val intent = Intent(this, AddChapterActivity::class.java)
+            intent.putExtra("categoryId", categoryId)
+            startActivity(intent)
         }
 
         binding.tvSearch.addTextChangedListener(object : TextWatcher {
