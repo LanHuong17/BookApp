@@ -139,6 +139,8 @@ class HomeFragment : Fragment {
         return binding.root
     }
 
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -249,7 +251,6 @@ class HomeFragment : Fragment {
             })
     }
 
-
     private fun loadMostViewedBooks() {
         subBinding.totalDownload.visibility = View.GONE
         viewArrayList = ArrayList()
@@ -302,7 +303,7 @@ class HomeFragment : Fragment {
     private fun loadAllBooks() {
         pdfArrayList = ArrayList()
         var ref = FirebaseDatabase.getInstance().getReference("Books")
-        ref.limitToFirst(5).addValueEventListener(object : ValueEventListener{
+        ref.limitToLast(5).addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 pdfArrayList.clear()
                 for(ds in snapshot.children){

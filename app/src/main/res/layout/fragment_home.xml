@@ -31,7 +31,7 @@
             android:drawablePadding="10dp"
             android:drawableEnd="@drawable/search_gray"
             android:padding="10dp"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"/>
 
             <ImageButton
                 android:id="@+id/voiceBtn"

@@ -84,16 +84,17 @@
                 android:layout_marginStart="220dp"
                 android:layout_marginTop="10dp"
                 android:text="Forgot password?"/>
-            <Button
+            <TextView
                 android:id="@+id/loginBtn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_below="@id/tvForgot"
-                android:text="LOGIN"
-                android:textColor="@color/white"
+                android:layout_centerInParent="true"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="@color/black"
-                />
+                android:background="@drawable/layout_btn"
+                android:gravity="center"
+                android:text="LOGIN"
+                android:textColor="@color/white"/>
             <Button
                 android:id="@+id/noAccBtn"
                 android:layout_width="match_parent"

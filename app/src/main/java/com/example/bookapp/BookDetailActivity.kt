@@ -85,7 +85,13 @@ class BookDetailActivity : AppCompatActivity() {
             }
         }
 
-        checkFavorite()
+        if (firebaseAuth.currentUser == null) {
+            val drawable = ContextCompat.getDrawable(this@BookDetailActivity, R.drawable.heart)
+            binding.addFavorite.setImageDrawable(drawable)
+        } else {
+            checkFavorite()
+        }
+
         loadBookDetail()
         loadBookChapter()
         loadComment()
@@ -146,7 +152,11 @@ class BookDetailActivity : AppCompatActivity() {
             comment = commentAddBinding.tvComment.text.toString().trim()
             if (comment.isEmpty()) {
                 Toast.makeText(this, "Enter comment", Toast.LENGTH_SHORT).show()
-            } else {
+            }
+            else if (comment.length <5){
+                Toast.makeText(this, "Please comment more than 5 characters ", Toast.LENGTH_SHORT).show()
+            }
+            else {
                 alertDialog.dismiss()
                 addComment()
             }

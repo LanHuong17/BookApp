@@ -159,17 +159,18 @@
         android:text="The Function is Locked. Please Login to Use"
         android:textSize="30dp"
         android:textStyle="bold" />
-    <Button
+
+    <TextView
         android:id="@+id/loginBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="90dp"
         android:layout_height="60dp"
         android:layout_below="@id/noAcc"
         android:layout_centerInParent="true"
-        android:text="LOGIN"
-        android:visibility="gone"
-        android:textColor="@color/white"
         android:layout_marginTop="10dp"
-        android:backgroundTint="@color/black"
-        />
+        android:background="@drawable/layout_btn"
+        android:gravity="center"
+        android:text="LOGIN"
+        android:textColor="@color/white"
+        android:visibility="gone"/>
 
 </RelativeLayout>

@@ -130,16 +130,17 @@
 <!--                android:layout_marginStart="220dp"-->
 <!--                android:layout_marginTop="10dp"-->
 <!--                android:text="Forgot password?"/>-->
-            <Button
+            <TextView
                 android:id="@+id/registerBtn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_below="@id/inputlayout_03"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/layout_btn"
+                android:gravity="center"
                 android:text="REGISTER"
-                android:textColor="@color/white"
-                android:layout_marginTop="30dp"
-                android:backgroundTint="@color/black"
-                />
+                android:textColor="@color/white"/>
         </RelativeLayout>
     </ScrollView>
 
