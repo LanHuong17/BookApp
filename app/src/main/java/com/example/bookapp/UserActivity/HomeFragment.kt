@@ -38,7 +38,8 @@ import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.delay
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.toString as toString1
+import androidx.core.util.Pair
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 
 
 class HomeFragment : Fragment {
@@ -97,6 +98,7 @@ class HomeFragment : Fragment {
         loadMostViewedBooks()
         loadMostDownloadedBooks()
         checkToken()
+
         binding.voiceBtn.setOnClickListener{
             askSpeechInput()
         }
@@ -210,7 +212,7 @@ class HomeFragment : Fragment {
         subBinding.totalView.visibility = View.INVISIBLE
         downloadArrayList = ArrayList()
         var ref = FirebaseDatabase.getInstance().getReference("Books")
-        ref.orderByChild("downloadCount").limitToLast(5)
+        ref.orderByChild("downloadCount").limitToLast(4)
             .addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     downloadArrayList.clear()
@@ -291,6 +293,7 @@ class HomeFragment : Fragment {
                         LinearLayoutManager.HORIZONTAL,
                         false
                     )
+                    binding.rcv1.invalidate()
                 }
 
 
@@ -339,5 +342,7 @@ class HomeFragment : Fragment {
             }
         })
     }
+
+
 
 }

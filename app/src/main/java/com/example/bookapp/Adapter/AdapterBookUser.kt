@@ -1,7 +1,9 @@
 package com.example.bookapp.Adapter
 
+import android.app.ActivityOptions.makeSceneTransitionAnimation
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import com.example.bookapp.Func.MyApplication
 import com.example.bookapp.Func.MyApplication.Companion.formatTimeStamp
 import com.example.bookapp.databinding.ListBooksItemBinding
 import kotlin.collections.ArrayList
+import com.example.bookapp.databinding.ActivityBookDetailBinding
 
 class AdapterBookUser: RecyclerView.Adapter<AdapterBookUser.ModelBook> {
     private lateinit var context: Context
@@ -79,10 +82,12 @@ class AdapterBookUser: RecyclerView.Adapter<AdapterBookUser.ModelBook> {
         MyApplication.loadPdfFromUrlSinglePage(url, title, holder.pdfView, holder.progressBar, null)
 
 
+
         holder.itemView.setOnClickListener {
             val intent = Intent(context, BookDetailActivity::class.java)
             intent.putExtra("bookId", id)
             context.startActivity(intent)
+
         }
     }
 
@@ -90,7 +95,6 @@ class AdapterBookUser: RecyclerView.Adapter<AdapterBookUser.ModelBook> {
     override fun getItemCount(): Int {
         return bookArrayList.size
     }
-
 
 
 }
