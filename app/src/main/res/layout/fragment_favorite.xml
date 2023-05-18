@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UserActivity.FavoriteFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
     <ImageButton
         android:id="@+id/cover"
         android:layout_width="match_parent"
@@ -145,32 +156,45 @@
         tools:listitem="@layout/list_favorite">
 
     </androidx.recyclerview.widget.RecyclerView>
+        </RelativeLayout>
+    </ScrollView>
 
-    <TextView
-        android:id="@+id/noAcc"
-        android:layout_width="200dp"
+    <ScrollView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="176dp"
-        android:drawableBottom="@drawable/ic_baseline_person_24"
-        android:gravity="center"
-        android:visibility="gone"
-        android:text="The Function is Locked. Please Login to Use"
-        android:textSize="30dp"
-        android:textStyle="bold" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/loginBtn"
-        android:layout_width="90dp"
-        android:layout_height="60dp"
-        android:layout_below="@id/noAcc"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/layout_btn"
-        android:gravity="center"
-        android:text="LOGIN"
-        android:textColor="@color/white"
-        android:visibility="gone"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/noAcc"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:drawableBottom="@drawable/ic_baseline_person_24"
+                android:gravity="center"
+                android:text="The Function is Locked. Please Login to Use"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/loginBtn"
+                android:layout_width="90dp"
+                android:layout_height="60dp"
+                android:layout_below="@id/noAcc"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/layout_btn"
+                android:gravity="center"
+                android:text="LOGIN"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

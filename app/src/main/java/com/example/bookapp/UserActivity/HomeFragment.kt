@@ -258,7 +258,7 @@ class HomeFragment : Fragment {
         viewArrayList = ArrayList()
 
         var ref = FirebaseDatabase.getInstance().getReference("Books")
-        ref.orderByChild("viewCount").limitToLast(5)
+        ref.orderByChild("viewCount").limitToLast(4)
             .addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     viewArrayList.clear()
@@ -293,7 +293,6 @@ class HomeFragment : Fragment {
                         LinearLayoutManager.HORIZONTAL,
                         false
                     )
-                    binding.rcv1.invalidate()
                 }
 
 

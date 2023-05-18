@@ -1,7 +1,10 @@
 package com.example.bookapp
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.pm.PackageManager
+import android.media.AudioManager
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -20,12 +23,14 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.io.FileOutputStream
+import java.io.IOException
 import java.security.cert.Extension
 
 class ReadBookActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityReadBookBinding
     private lateinit var progressDialog: ProgressDialog
+    var media: MediaPlayer? = null
 
     var chapterId = ""
     var bookId = ""
@@ -70,6 +75,7 @@ class ReadBookActivity : AppCompatActivity() {
         MyApplication.incrementChapterView(chapterId, bookId)
 
         loadChapterDetail()
+
     }
 
     private var requestStoragePermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {

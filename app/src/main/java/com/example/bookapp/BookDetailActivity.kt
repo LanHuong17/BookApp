@@ -1,7 +1,10 @@
 package com.example.bookapp
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +25,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.io.IOException
 
 class BookDetailActivity : AppCompatActivity() {
 
@@ -35,7 +39,7 @@ class BookDetailActivity : AppCompatActivity() {
 
     private lateinit var commentArrayList: ArrayList<ModelComment>
     private lateinit var adapterComment: AdapterComment
-
+    var media: MediaPlayer? = null
     private companion object {
         const val TAG = "BOOK_DETAIL_TAG"
     }
@@ -95,6 +99,7 @@ class BookDetailActivity : AppCompatActivity() {
         loadBookDetail()
         loadBookChapter()
         loadComment()
+
     }
 
     private fun loadComment() {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -66,10 +66,11 @@
 
             <TableLayout
                 android:id="@+id/tbl"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/tvEmail">
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/tvEmail"
+                android:layout_marginTop="10dp">
 
                 <TableRow>
 
@@ -77,31 +78,32 @@
                         android:id="@+id/tvAccount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Account"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
                         android:layout_marginStart="30dp"
+                        android:layout_marginEnd="40dp"
+                        android:text="Account"
                         android:textColor="@color/black"
-                        android:layout_marginEnd="40dp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvMember"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="40dp"
                         android:text="Member Date"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:layout_marginEnd="40dp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/tvFavorite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="40dp"
                         android:text="Favorite Book"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:layout_marginEnd="40dp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
                 </TableRow>
 
@@ -111,26 +113,26 @@
                         android:id="@+id/tvSubAcc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="NA"
-                        android:textSize="14sp"
                         android:layout_marginStart="30dp"
-                        android:layout_marginEnd="10dp" />
+                        android:layout_marginEnd="10dp"
+                        android:text="NA"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvSubMem"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:layout_marginEnd="10dp"
                         android:text="N/A"
-                        android:layout_marginEnd="10dp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvSubFav"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:layout_marginEnd="10dp"
                         android:text="N/A"
-                        android:layout_marginEnd="10dp" />
+                        android:textSize="14sp" />
 
                 </TableRow>
 
@@ -160,34 +162,47 @@
 
         </RelativeLayout>
 
+
+
     </ScrollView>
-    <TextView
-        android:id="@+id/noAcc"
-        android:layout_width="200dp"
+
+    <ScrollView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="212dp"
-        android:drawableBottom="@drawable/ic_baseline_person_24"
-        android:gravity="center"
-        android:visibility="gone"
-        android:text="The Function is Locked. Please Login to Use"
-        android:textSize="30dp"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/loginBtn"
-        android:layout_width="90dp"
-        android:layout_height="60dp"
-        android:layout_below="@id/noAcc"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/layout_btn"
-        android:gravity="center"
-        android:text="LOGIN"
-        android:textColor="@color/white"
-        android:visibility="gone"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/noAcc"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:drawableBottom="@drawable/ic_baseline_person_24"
+                android:gravity="center"
+                android:text="The Function is Locked. Please Login to Use"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/loginBtn"
+                android:layout_width="90dp"
+                android:layout_height="60dp"
+                android:layout_below="@id/noAcc"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/layout_btn"
+                android:gravity="center"
+                android:text="LOGIN"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </ScrollView>
 
 
-
-
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

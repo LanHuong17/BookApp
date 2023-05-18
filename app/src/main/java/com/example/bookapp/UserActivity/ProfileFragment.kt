@@ -41,7 +41,11 @@ class ProfileFragment : Fragment() {
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(LayoutInflater.from(context), container, false)
         firebaseAuth = FirebaseAuth.getInstance()
@@ -57,7 +61,7 @@ class ProfileFragment : Fragment() {
             binding.noAcc.visibility = View.VISIBLE
             binding.loginBtn.visibility = View.VISIBLE
             binding.layout.visibility = View.GONE
-            binding.loginBtn.setOnClickListener{
+            binding.loginBtn.setOnClickListener {
                 startActivity(Intent(context, LoginActivity::class.java))
             }
         } else {
@@ -66,13 +70,10 @@ class ProfileFragment : Fragment() {
             binding.layout.visibility = View.VISIBLE
 
             loadProfileInfo()
-//        loadFavoriteBook()
-
-//        binding1.removeFavorite.visibility=View.GONE
-
             val tabLayout = binding.tabLayout
             val viewPaper2 = binding.viewPager
-            adapterFragment = AdapterFragmentPage(requireActivity().supportFragmentManager, lifecycle)
+            adapterFragment =
+                AdapterFragmentPage(requireActivity().supportFragmentManager, lifecycle)
 
             tabLayout.addTab(tabLayout.newTab().setText("Favorites"))
             tabLayout.addTab(tabLayout.newTab().setText("Notification"))
@@ -85,6 +86,7 @@ class ProfileFragment : Fragment() {
                         viewPaper2.currentItem = tab.position
                     }
                 }
+
                 override fun onTabUnselected(tab: TabLayout.Tab?) {
                 }
 
@@ -147,71 +149,25 @@ class ProfileFragment : Fragment() {
 
             })
 
-            favArrayList = ArrayList()
+        favArrayList = ArrayList()
 
-            val ref2 = FirebaseDatabase.getInstance().getReference("Users")
-            ref2.child(firebaseAuth.uid!!).child("Favorites")
-                .addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        favArrayList.clear()
-                        for (ds in snapshot.children) {
-                            val bookId = "${ds.child("bookId").value}"
-                            val modelBook = ModelBook()
-                            modelBook.id = bookId
-                            favArrayList.add(modelBook)
-                        }
-                        binding.tvSubFav.text = "${favArrayList.size}"
+        val ref2 = FirebaseDatabase.getInstance().getReference("Users")
+        ref2.child(firebaseAuth.uid!!).child("Favorites")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    favArrayList.clear()
+                    for (ds in snapshot.children) {
+                        val bookId = "${ds.child("bookId").value}"
+                        val modelBook = ModelBook()
+                        modelBook.id = bookId
+                        favArrayList.add(modelBook)
                     }
+                    binding.tvSubFav.text = "${favArrayList.size}"
+                }
 
-                    override fun onCancelled(error: DatabaseError) {
+                override fun onCancelled(error: DatabaseError) {
 
-                    }
-                })
+                }
+            })
     }
-//    private fun loadFavoriteBook() {
-//        favArrayList = ArrayList()
-//
-//        val ref = FirebaseDatabase.getInstance().getReference("Users")
-//        ref.child(firebaseAuth.uid!!).child("Favorites")
-//            .addValueEventListener(object : ValueEventListener {
-//                override fun onDataChange(snapshot: DataSnapshot) {
-//                    favArrayList.clear()
-//                    for (ds in snapshot.children) {
-//                        val bookId = "${ds.child("bookId").value}"
-//
-//                        val modelBook = ModelBook()
-//                        modelBook.id = bookId
-//
-//                        favArrayList.add(modelBook)
-//                    }
-//                    binding.tvSubFav.text = "${favArrayList.size}"
-//
-//                    val layoutManager = LinearLayoutManager(context)
-//                    binding.listFav.layoutManager = layoutManager
-//
-//                    if (favArrayList.isNotEmpty()) {
-//                        if (context == null) {
-//                            Log.d("CHECK NULL", "Check Null: context is null")
-//                        } else {
-//                            adapterFavorite = AdapterFavorite(context!!, favArrayList)
-//                            binding.listFav.adapter = adapterFavorite
-//                        }
-//                    } else {
-//                        //...
-//                    }
-//
-//                    binding.listFav.layoutManager= GridLayoutManager(
-//                        context,
-//                        3,
-//                        LinearLayoutManager.VERTICAL,
-//                        false
-//                    )
-//                }
-//
-//                override fun onCancelled(error: DatabaseError) {
-//
-//                }
-//
-//            })
-//    }
 }

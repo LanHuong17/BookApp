@@ -1,8 +1,12 @@
 package com.example.bookapp
 
+import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
@@ -13,6 +17,7 @@ import com.example.bookapp.UserActivity.ProfileFragment
 import com.example.bookapp.databinding.ActivityDashboardAdminBinding
 import com.example.bookapp.databinding.ActivityDashboardUserBinding
 import com.google.firebase.auth.FirebaseAuth
+import java.io.IOException
 
 class DashboardUserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDashboardUserBinding
@@ -22,6 +27,7 @@ class DashboardUserActivity : AppCompatActivity() {
     val CategoryFragment = CategoryFragment()
     val FavoriteFragment = FavoriteFragment()
     val ProfileFragment = ProfileFragment()
+    var media: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +44,7 @@ class DashboardUserActivity : AppCompatActivity() {
                 R.id.home -> replaceFragment(HomeFragment)
                 R.id.category -> replaceFragment(CategoryFragment)
                 R.id.favorite -> replaceFragment(FavoriteFragment)
-                R.id.profile -> replaceFragment(ProfileFragment)
+                R.id.profile -> replaceFragment(ProfileFragment())
                 else -> {}
             }
             
@@ -51,7 +57,64 @@ class DashboardUserActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
+
+        binding.musicBtn.setOnCheckedChangeListener{_, isChecked ->
+            if(isChecked){
+                playAudio()
+                onSwitchChanged(true)
+            } else{
+                pauseAudio()
+                onSwitchChanged(false)
+            }
+        }
+        setSwitchState()
+
     }
+
+    private fun pauseAudio() {
+        if (media == null) {
+            media = MediaPlayer.create(this, R.raw.peaceful_hike)
+            media?.setAudioStreamType(AudioManager.STREAM_MUSIC)
+            media!!.pause()
+        } else{
+            media!!.pause()
+        }
+    }
+
+    private fun playAudio() {
+        if (media == null) {
+            media = MediaPlayer.create(this, R.raw.peaceful_hike)
+            media?.setAudioStreamType(AudioManager.STREAM_MUSIC)
+
+            try {
+                media?.apply {
+                    if (!isPlaying) {
+                        start()
+                    }
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        } else{
+            media?.start()
+        }
+    }
+
+    private fun onSwitchChanged(isChecked: Boolean) {
+        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("SWITCH_STATE", isChecked)
+        editor.apply()
+    }
+
+    private fun setSwitchState() {
+        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val switchState = sharedPreferences.getBoolean("SWITCH_STATE", false)
+        binding.musicBtn.isChecked = switchState
+    }
+
+
+
 
     private fun checkUser() {
         val firebaseUser = firebaseAuth.currentUser
